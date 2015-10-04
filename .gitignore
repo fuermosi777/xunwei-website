@@ -1,0 +1,10 @@
+.DS_Store
+
+local.py
+
+secret.py
+
+*.pyc
+
+node_modules
+node_modules/

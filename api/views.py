@@ -233,7 +233,7 @@ def star_post(request):
     return JsonResponse(res, safe=False)
 
 def post_star(request):
-    post_id = request.GET.get('post_star', None)
+    post_id = request.GET.get('post_id', None)
     star_num = Star.objects.filter(post_id=post_id).count()
     res = {
         'star_num': star_num

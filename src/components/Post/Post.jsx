@@ -12,6 +12,7 @@ export default React.createClass({
 
     componentDidMount() {
         ContentService.getPostStarNum(this.props.data.id).then((res) => {
+            console.log(res);
             this.setState({starNum: res.star_num});
         });
     },
