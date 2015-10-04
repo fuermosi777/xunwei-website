@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block noscript %}
+    <p>纽约、湾区等北美热门地区餐馆热评</p>
+    <ul>
+    {% for p in post %}
+        <li>
+            <p><img src="{{ p.business.photo.url }}" alt="{{ p.title }}" width="100"/></p>
+            <p><a href="/post/{{ p.id }}" title="{{ p.title }}">{{ p.title }}</a></p>
+            <p>来源: <a href="{{ p.source }}">{{ p.source }}</a></p>
+            <p>热门地区: {{ p.business.hot_area.name }}</p>
+            <p>标签: {% for t in p.business.tag.all %}<a href="/tag/{{ t.name }}">{{ t.name }}</a>{% endfor %}</p>
+            <p>{{ p.preview }} <a href="/post/{{ p.id }}">更多...</a></p>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

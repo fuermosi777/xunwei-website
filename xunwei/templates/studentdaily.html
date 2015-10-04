@@ -1,0 +1,60 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+{% load staticfiles %}
+
+<head>
+    <title>{% block title %}留学生日报{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/favicon-16x16.png" sizes="16x16" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="留学生日报">
+    <meta name="keywords" content="留学生日报">
+    <!-- itunes -->
+    <meta name="apple-itunes-app" content="app-id=944485146">
+    <!-- jQuery -->
+    <script src='https://code.jquery.com/jquery-1.11.1.min.js'></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <!-- leaflet -->
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
+
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.min.css">
+
+    <!-- jasny -->
+    <script src="{{ STATIC_URL }}js/jasny-bootstrap.min.js"></script>
+    <link href="{{ STATIC_URL }}css/jasny-bootstrap.min.css" rel='stylesheet' />
+
+    <!-- style -->
+    <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet"> {% block script %}{% endblock %}
+</head>
+<style>
+html,
+body {
+    height: 100%;
+}
+body {
+    margin-top: -20px;
+}
+</style>
+
+<body>
+    <div style="background:#00B0CF;height:100%;width:100%;">
+        <div style="position: absolute;
+top: 30%;
+left: 10%;
+right: 10%;
+text-align: center;
+color: white;">
+            <h1>留学生日报</h1>
+            <p style="color:white">敬请期待...</p>
+        </div>
+    </div>
+</body>
+
+</html>

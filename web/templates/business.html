@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}| {{ business.name }} {{ business.name2 }}{% endblock %}
+{% block noscript %}
+    <p><img src="{{ p.business.photo.url }}" alt="{{ p.title }}" width="100"/></p>
+    <h2>{{ business.name }} {{ business.name2 }}</h2>
+    <p>地址: {{ business.street1 }} {{ business.street2 }} {{ business.city }}, {{ business.city.state }} {{ business.postcode.number }}</p>
+    <p>热门地区: {{ business.hot_area.name }}</p>
+    <p>标签: {% for t in business.tag.all %}<a href="/tag/{{ t.name }}">{{ t.name }}</a>{% endfor %}</p>
+    <h2>相关评论</h2>
+    <ul>
+        {% for p in post %}
+        <li><a href="/post/{{ p.id }}/">{{ p.title }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

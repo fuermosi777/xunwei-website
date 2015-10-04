@@ -1,0 +1,131 @@
+{% extends "base.html" %} {% block title %}寻味{% endblock %} {% block caption %} {% endblock %} {% block content %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="panel panel-default">
+				<div class="panel-body">
+					<div class="row">
+						<div class="col-sm-2 col-sm-offset-5 col-xs-6 col-xs-offset-3">
+							<img src="{{ restaurant.photo.url }}" class="img-responsive img-rounded" />
+						</div>
+					</div>
+					<div class="row">
+						<h1 class="text-center">{{ restaurant.name }}</h1>
+						<h2 class="text-center">{{ restaurant.name2 }}</h2>
+						<p class="text-center">{{ restaurant.street1 }}{{ restaurant.street2 }} {{ restaurant.city }}, {{ restaurant.city.state }} {{ restaurant.postcode }}</p>
+						<h2 class="text-center"><span class="label label-success">{{ restaurant.star }}</span></h2>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-8">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<p>基本资料</p>
+				</div>
+				<div class="panel-body">
+					<p><i class="fa fa-coffee"></i> {{ restaurant.name }} {{ restaurant.name2 }}</p>
+					<p><i class="fa fa-phone"></i> {{ restaurant.phone }}</p>
+					<p><i class="fa fa-map-marker"></i> {{ restaurant.street1 }} {{ restaurant.city }}, {{ restaurant.city.state }} {{ restaurant.postcode }}</p>
+					<p><i class="fa fa-money"></i> {{ restaurant.price }}</p>
+					<p><i class="fa fa-laptop"></i> <a href="{{ restaurant.website|default:'#' }}">{{ restaurant.website|default:"暂无网站" }}</a></p>
+					<p><i class="fa fa-comment"></i> {{ restaurant.description }}</p>
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<p>最新评论</p>
+				</div>
+				<div class="panel-body">
+					{% if not review %}
+					<p>暂无评论...</p>
+					{% endif %}
+					{% for r in review %}
+					<div class="row">
+						<div class="col-sm-1 col-xs-2">
+							<h5>
+								<a href="http://xun-wei.com/accounts/profile/{{ r.user.id }}/"><img src="{{ r.user.userprofile.avatar.url }}" class="img-responsive img-circle" /></a>
+							</h5>
+						</div>
+						<div class="col-sm-11 col-xs-10">
+							<h5><a href="http://xun-wei.com/accounts/profile/{{ r.user.id }}/">{{ r.user.username }}</a> 评价 <small class="pull-right">{{ r.review_date|date:"Y年m月d日" }}</small></h5>
+							<p>{{ r.review }}</p>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+				<div class="panel-footer">
+					{% if user.is_authenticated %}
+					<div class="row">
+						<div class="col-sm-1 col-xs-2">
+							<h4><img src="{{ request.user.userprofile.avatar.url }}" class="img-responsive img-circle" /></h4>
+						</div>
+						<div class="col-sm-11 col-xs-10">
+							<h4>{{ request.user.username }}</h4>
+							<form method="POST">
+								<div class="form-group">
+									<input class="form-control" placeholder="请写下您的评价吧！"/>
+								</div>
+							</form>
+						</div>
+					</div>
+					{% else %}
+					<p><a href="/accounts/login/" class="btn btn-danger">登录发表评论</a></p>
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4">
+			<div class="panel panel-default">
+				<img src="https://maps.googleapis.com/maps/api/staticmap?center={{ restaurant.latitude }},{{ restaurant.longitude }}&scale=2&zoom=15&size=286x168&maptype=roadmap" class="img-responsive"/>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<p>相似餐厅</p>
+				</div>
+				<div class="panel-body">
+					{% for r in similar_restaurant %}
+					<div class="row">
+						<div class="col-xs-3">
+							<h4>
+								<img src="{{ r.photo.url }}" class="img-responsive img-rounded" />
+							</h4>
+						</div>
+						<div class="col-xs-9">
+							<h4><a href="/restaurant/{{ r.id }}/">{{ r.name }}</a></h4>
+							<p>{{ r.street1 }} {{ r.city }}</p>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<p>附近餐厅</p>
+				</div>
+				<div class="panel-body">
+					{% for r in nearby_restaurant %}
+					<div class="row">
+						<div class="col-xs-3">
+							<h4>
+								<img src="{{ r.photo.url }}" class="img-responsive img-rounded" />
+							</h4>
+						</div>
+						<div class="col-xs-9">
+							<h4><a href="/restaurant/{{ r.id }}/">{{ r.name }}</a></h4>
+							<p>{{ r.street1 }} {{ r.city }}</p>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+{% endblock %}

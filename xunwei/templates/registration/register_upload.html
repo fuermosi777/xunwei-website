@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% block title %}其他信息{% endblock %} {% block caption %} {% endblock %} {% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4>编辑信息</h4>
+                </div>
+                <div class="panel-body">
+                    <form action="" method="post" enctype="multipart/form-data" role="form">{% csrf_token %} 
+                        {% if error %}
+                        <div class="form-group">
+                            <div class="alert alert-danger" role="alert">
+                                <i class="fa fa-exclamation-triangle"></i> {{ error }}
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="form-group">
+                            <input type="text" name="nickname" class="form-control" placeholder="昵称（可中文" value="{{ request.user.userprofile.nickname }}">
+                        </div>
+                        <div class="form-group">
+                            <div class="fileinput fileinput-new" data-provides="fileinput">
+                                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;">
+                                    <img src="{{ request.user.userprofile.avatar.url }}" class="img-responsive" />
+                                </div>
+                                <div>
+                                    <span class="btn btn-default btn-shadow btn-file">
+                                    <span class="fileinput-new">上传头像</span>
+                                    <span class="fileinput-exists">换一个</span>
+                                    <input type="file" name="avatar" />
+                                    </span>
+                                    <a href="#" class="btn btn-default btn-shadow fileinput-exists" data-dismiss="fileinput">移除</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" rows="5" placeholder="介绍一下自己" name="introduction"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-warning btn-shadow" type="submit" value="保存" name="saveavatar" />
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block script %} {% endblock %}

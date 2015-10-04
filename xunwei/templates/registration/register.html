@@ -1,0 +1,124 @@
+{% extends "base.html" %} {% block title %}注册寻味{% endblock %} {% block caption %} {% endblock %} {% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-10 col-sm-offset-1 col-lg-8 col-lg-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h1 class="text-center">加入寻味</h1>
+                    <h3 class="text-center">追寻中国人自己的味道</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-6 col-sm-offset-3">
+                            <form action="" method="post" role="form" id="registerform">
+                                {% csrf_token %}
+                                {% if error %}
+                                <div class="form-group">
+                                    <div class="alert alert-danger" role="alert">
+                                        <i class="fa fa-exclamation-triangle"></i> {{ error }}
+                                    </div>
+                                </div>
+                                {% endif %}
+                                <div class="form-group">
+                                    <input type="text" required class="form-control" name="username" value="" id="username" placeholder="用户名">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" required class="form-control" name="password" value="" id="password" placeholder="密码">
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" required class="form-control" name="email" value="" id="password" placeholder="Email地址">
+                                </div>
+                                <div class="form-group">
+                                    <p>
+                                        <i class="fa fa-info-circle"></i> 当您点击"加入"按钮后，就表明您同意我们的 <a href="#" data-toggle="modal" data-target="#agreement">服务条款和协议</a>
+                                    </p>
+                                </div>
+                                <div class="form-group">
+                                    <input class="btn btn-warning btn-block submit-button" type="submit" value="加入" name="next1" />
+                                    <input type="hidden" name="next" value="{{ next|escape }}" />
+                                </div>
+                                <div class="form-group">
+                                    <a href="/accounts/login/" type="button" class="btn btn-default pull-right">登录</a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="agreement" tabindex="-1" role="dialog" aria-labelledby="agreementLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">关闭</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">使用条款及协议</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    用户在接受寻味网（xun-wei.com）服务之前，请务必仔细阅读本条款并同意本声明。用户访问寻味网（xun-wei.com）的行为以及通过各类方式利用本网站的行为，都将被视作是对本声明全部内容的无异议的认可;如有异议，请立即跟耐人工作室协商，并取得本网站的书面同意意见。
+                </p>
+
+                <p>
+                    第一条 用户在从事与本网站相关的所有行为(包括但不限于访问浏览、利用、转载、宣传介绍)时，不得故意或者过失的损害或者弱化本网站的各类合法权利与利益，不得利用本网站以任何方式直接或者间接的从事违反中国法律、国际公约以及社会公德的行为，且访问者应当恪守下述承诺：
+                    <ol>
+
+                        <li>传输和利用信息符合中国法律、国际公约的规定、符合公序良俗;</li>
+
+                        <li>不将寻味网（xun-wei.com）以及与之相关的网络服务用作非法用途以及非正当用途;</li>
+
+                        <li>不干扰和扰乱寻味网（xun-wei.com）以及与之相关的网络服务;</li>
+
+                        <li>遵守与寻味网（xun-wei.com）的网络服务的协议、规定、程序和惯例等。</li>
+                    </ol>
+
+                    <p>
+                        第二条 寻味网（xun-wei.com）郑重提醒访问者：请在转载、上载或者下载相关作品（包括食评，博文，图片及评论等）时务必尊重寻味网（xun-wei.com）及其用户的版权、著作权;如果您发现有您未署名的作品，请立即和我们联系，我们会在第一时间加上您的署名或作相关处理。
+                    </p>
+
+                    <p>
+                        第三条 除我们另有明确说明或者中国法律有强制性规定外，寻味网（xun-wei.com）用户原创的作品，耐人工作室及作者共同享有版权，其他网站及传统媒体如需使用，须取得本网站的书面授权，未经授权严禁转载或用于其它商业用途。
+                    </p>
+
+                    <p>
+                        第四条 寻味网（xun-wei.com）中的内容仅代表发布用户本人的观点，不代表耐人工作室的观点和看法，与本网站立场无关，相关责任用户自负。
+                    </p>
+
+                    <p>
+                        第五条 寻味网（xun-wei.com）有权将在本网站内发表的作品作品（包括食评，博文，图片及评论等）用于其他用途，包括网站、电子杂志等，作品有附带版权声明者除外。
+                    </p>
+
+                    <p>
+                        第六条 当寻味网（xun-wei.com）以链接形式推荐其他网站内容时，本网站并不对这些网站或资源的可用性负责，且不保证从这些网站获取的任何内容、产品、服务或其他材料的真实性、合法性，对于任何因使用或信赖从此类网站或资源上获取的内容、产品、服务或其他材料而造成(或声称造成)的任何直接或间接损失，本网站及耐人工作室均不承担任何责任。
+                    </p>
+
+                    <p>
+                        第七条 用户在寻味网（xun-wei.com）注册时提供的个人基本资料，本网站除您本人同意及第八条规定外不会将用户的任何信息资料以任何方式泄露给任何一方。
+                    </p>
+
+                    <p>
+                        第八条 当政府部门、司法机关等依照法定程序要求寻味网（xun-wei.com）披露个人资料时，本网站将根据执法单位之要求或为公共安全之目的提供个人资料。在此情况下之任何披露，本网站均得免责。
+                    </p>
+
+                    <p>
+                        第九条 由于用户将个人密码告知他人或与他人共享注册账户，由此导致的任何个人资料泄露，寻味网（xun-wei.com）及耐人工作室不负任何责任。
+                    </p>
+
+                    <p>
+                        第十条 寻味网（xun-wei.com）有部分内容来自互联网，如无意中侵犯了哪个媒体、公司、企业或个人等的知识产权，请来电或致函告之，本网站将在规定时间内给予删除等相关处理，若有涉及版权费等问题，请及时提供相关证明等材料并与我们联系，通过友好协商公平公正原则处理纠纷。
+                    </p>
+
+                    <p>第十一条 以上声明内容的最终解释权归寻味网（xun-wei.com）以及耐人工作室所有。</p>
+
+            </div>
+            <div class="modal-footer"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}

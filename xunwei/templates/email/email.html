@@ -1,0 +1,27 @@
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+</head>
+<style>
+    p {
+        font-size:18px;
+    }
+</style>
+<body>
+    <div style="background:#eee;padding:30px;margin:20px;border-radius:5px;">
+        <!--<img src="http://foovoor.com/static/img/logo_inverse.png" style="height:40px;" />-->
+        <img src="http://xun-wei.com/static/img/weibo-logo-xunwei.jpg" style="height:40px;" />
+        <p style="color:#595959;font-size:16px;font-weight:bold;">{{ title }}</p>
+        <p style="color:#595959;">亲爱的用户 {{ username }} :</p>
+        <p style="color:#595959;">{{ content|safe }}</p>
+        <p style="color:#595959;"></p>
+        <p style="color:#999999;font-size:12px;text-align:center;margin-top:80px;">&copy; 寻味纽约</p>
+        <p style="color:#999999;font-size:12px;text-align:center">
+            <br>这封邮件是发送给 {{ username }}。 如果你意外收到这封邮件，请直接删除。
+        </p>
+
+    </div>
+</body>
+
+</html>

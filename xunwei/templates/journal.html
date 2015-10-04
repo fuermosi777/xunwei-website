@@ -1,0 +1,155 @@
+{% extends "base.html" %} {% block title %} {{ journal.title }} {% endblock%} {% block caption %}
+
+{% endblock %} {% block content %}
+<div class="row restaurant-caption" style="height:250px;">
+    <div class="carousel slide">
+        <div class="carousel-inner">
+            <div class="restaurant-hero" style="background: url('{% if tag %}{% for t in tag %}{% if forloop.first %}{{ MEDIA_URL }}{{ t.photo }}{% endif %}{% endfor %}{% else %}{{ STATIC_URL }}img/food1.jpg{% endif %}');"></div>
+        </div>
+    </div>
+</div>
+<div class="container" style="max-width:800px">
+    <div class="row">
+        <div class="col-sm-9 journal-main">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="col-sm-12">
+                        <h2 class="page-header">{{ journal.title }}</h2>
+                        <p class="color-grey">
+                            <span class="pull-left">
+                                <i class="fa fa-clock-o"></i> {{ journal.date|date:"Y年m月d日" }} {% if journal.user.id == request.user.id %}<a href="/journal/edit/{{ journal.id }}/" class="grey-a">修改</a>{% endif %}
+                            </span>
+                            <span class="pull-right color-orange" style="padding-left:5px;padding-right:5px;">
+                                <i class="fa fa-eye"></i> {{ journal.view_num }}
+                            </span>
+                            <span class="pull-right">
+                                {% if request.user.is_authenticated %}
+                                <form role="form" action="" method="POST">
+                                    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                                    <input type="hidden" name="journal_id" value="{{ journal.id }}" />
+                                    <input type="hidden" name="user_id" value="{{ request.user.id }}" />
+                                    <button class="pull-right like-journal-button ajax-button-a" href=""><i class="fa fa-heart"></i> {{ journal.like_num|default_if_none:'0' }}</button>
+                                </form>
+                                {% else %}
+                                <a class="pull-right ajax-button-a" href="/account/login/?next={{ request.path }}"><i class="fa fa-heart"></i> {{ journal.like_num|default_if_none:'0' }}</a>
+                                {% endif%}
+                            </span>
+                        </p>
+                        <br>
+                        <br>
+                        <div class="long-review-review">
+                            {% autoescape off %} {{ journal.journal }} {% endautoescape %}
+                            <p><br><wb:share-button appkey="2ubgGg" addition="simple" type="button" ralateUid="5203632282"></wb:share-button></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- comment -->
+            <p class="page-header">{{ comment.count|default_if_none:'0' }} 条评论</p>
+            {% if user.is_authenticated %}
+            <div class="col-sm-12">
+                <div class="row">
+                    <form action="" method="post" role="form" id="commentform">{% csrf_token %}
+                        <div class="form-group">
+                            <input type="text" required="required" class="form-control" name="comment" value="" onfocus="showSubmit();" placeholder="写下你的评论...">
+                        </div>
+                        <!-- show submit function -->
+                        <script>
+                        function showSubmit() {
+                            if ($('#submitbtn').length) {
+                                return false;
+                            } else {
+                                $('#commentform').append('<div class="form-group" id="submitbtn"><input type="submit" class="btn btn-primary btn-shadow" value="评论"> <span><a href="" onclick="cancelSubmit();return false;">取消</a></span></div>');
+                            }
+                            return false;
+                        }
+
+                        function cancelSubmit() {
+                            $('#submitbtn').remove();
+                            return false;
+                        }
+                        </script>
+                    </form>
+                </div>
+            </div>
+            {% else %}
+            <div class="row">
+                <div class="col-xs-6">
+                    <a href="/accounts/login/?next={{request.path}}" class="btn btn-primary btn-block">登录发表评论</a>
+                </div>
+                <div class="col-xs-6">
+                    <a href="" class="btn btn-info btn-block">加入寻味</a>
+                </div>
+            </div>
+            {% endif %} {% load endless %} {% paginate 20 comment %}
+            <!-- show comments -->
+            {% for c in comment %}
+            <div class="row" id="journal-comment-{{ c.id }}">
+                <div class="col-sm-1 col-xs-2">
+                    <img src="{{ MEDIA_URL }}{{ c.user.userprofile.avatar }}" class="img-responsive img-rounded img-hover img-avatar" />
+                </div>
+                <div class="col-sm-11 col-xs-10">
+                    <p><a href="/accounts/profile/{{ c.user.id }}/">{{ c.user.userprofile.nickname }}</a>{% if c.to_id %} 回复 <a href="/accounts/profile/{{ c.user.id }}/">{{ c.to.user.userprofile.nickname }}</a>{% endif %}
+                    </p>
+                    <p>{{ c.comment }}</p>
+                    <p class="small color-grey">{{ c.date|date:"Y年m月d日" }} <a class="grey-a" href="" onclick="replyJournalComment({{ c.id }});return false;">回复</a></p>
+                </div>
+            </div>
+            {% endfor %} {% show_pages %}
+            <script>
+            function replyJournalComment(comment_id){
+                var csrf_token = '{{ csrf_token }}';
+                var row = $('#journal-comment-'+comment_id);
+                var reply_form = '<form action="" method="post" role="form" id="reply-form-'+comment_id+'"><div class="col-xs-11 col-xs-offset-1"><input type="hidden" name="csrfmiddlewaretoken" value="'+csrf_token+'"/><div class="form-group"><input type="text" required="required" class="form-control" name="comment" placeholder="写下你的回复..."></div><div class="form-group"><input type="hidden" name="comment_id" value="'+comment_id+'" /><input type="submit" class="btn btn-xs btn-primary btn-shadow" name="reply" value="回复"><span><a href="" onclick="cancelReply('+comment_id+');return false;">取消</a></span></div></div></form>';
+                row.append(reply_form);
+                return false;
+            }
+
+            function cancelReply(comment_id){
+                var form = $('form#reply-form-'+comment_id).remove();
+                return false;
+            }
+            </script>
+            <div class="placeholder"></div>
+        </div>
+        <div class="col-sm-3 journal-side">
+            <div class="row">
+                <div class="col-sm-7">
+                    <div class="long-review-avatar">
+                        <a href="/accounts/profile/{{ journal.user.id }}/">
+                            <img src="{{ MEDIA_URL }}{{ journal.user.userprofile.avatar }}" class="img-responsive img-circle long-review-avatar-img" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <p>by <a href="/accounts/profile/{{ journal.user.id }}/">{{ journal.user.userprofile.nickname }}</a>
+            </p>
+            {% if other %}
+            <h5 class="page-header color-grey">{{ journal.user.userprofile.nickname }}写的其他食记</h5>
+                {% for o in other %}
+                <p><a href="/journal/{{ o.id }}/">{{ o.title }}</a></p> 
+                {% endfor %}
+            {% endif %}
+            {% if tag %}
+            <h5 class="page-header color-grey">相关的餐馆</h5>
+                {% for t in tag %}
+                <div class="row">
+                    <div class="col-sm-6">
+                        <a href="/restaurant/{{ t.id }}/"><img src="{{ MEDIA_URL }}{{ t.photo }}" class="img-responsive img-rounded img-hover" /></a>
+                        <p><a href="/restaurant/{{ t.id }}/">{{ t.name }}</a></p> 
+                    </div>
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</div> {% endblock %}
+{% block script %}
+<!--必填-->
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://xun-wei.com/{{ request.path }}" />
+<meta property="og:title" content="{{ journal.title }}" />
+<meta property="og:description" content="{{ journal.title }} 的文章" />
+<!--选填-->
+<meta property="og:image" content="{% if tag %}{% for t in tag %}{{ MEDIA_URL }}{{ t.photo }}{% endfor %}{% else %}{{ STATIC_URL }}img/food1.jpg{% endif %}" />
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}搜索 :: {{ q }}{% endblock %}
+ {% block content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xs-12 map-block">
+                <div id="map-mobile"></div>
+        </div>
+    </div>
+</div>
+<script>
+var map = L.map('map-mobile').setView([{{ initial_latitude }}, {{ initial_longitude }}], 12);
+L.tileLayer('http://{s}.tiles.mapbox.com/v3/fuermosi777.i88jhog0/{z}/{x}/{y}.png', {
+    attribution: '寻味',
+    maxZoom: 18,
+    animate: true, 
+    duration: 1
+}).addTo(map);
+</script>
+
+<script>
+var markers = new Array();
+{% for restaurant in restaurant %}
+var marker = new L.marker([{{ restaurant.latitude }}, {{ restaurant.longitude }}]).bindPopup('<div class="marker-container"><div class="row"><div class="col-xs-4"><a href="/restaurant/{{ restaurant.id }}"><img class="marker-img img-rounded" src="{{ MEDIA_URL }}{{ restaurant.photo }}"/></a></div><div class="col-xs-8"><p><span class="color-grey">{{ restaurant.order }}.</span> <a class="map-link" href="/restaurant/{{ restaurant.id }}">{{ restaurant.name }}</a></p><p class="color-grey"><i class="fa fa-map-marker"></i> {{ restaurant.street1 }} {{ restaurant.street2 }} {{ restaurant.city }} {{ restaurant.postcode }}</p></div></div></div>').addTo(map).on('mouseover', function(evt) {
+  //evt.target is the marker that is being moused over 
+  evt.target.openPopup();
+  
+});
+markers[{{ restaurant.id }}] = marker;
+$('#item-{{ restaurant.id }}').on('mouseover', function(evt) {
+    
+    markers[{{ restaurant.id }}].openPopup();
+});
+{% endfor %}
+</script>
+
+
+
+{% endblock %}

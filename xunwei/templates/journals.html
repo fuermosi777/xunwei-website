@@ -1,0 +1,50 @@
+{% extends "base.html" %} {% block title %}寻味{% endblock %} {% block caption %} {% endblock %} {% block content %}
+<!-- section break -->
+<div class="container homepage-main">
+    <!-- 3:1 -->
+    <div class="col-sm-8">
+        <div class="col-sm-12">
+            <div class="page-header">
+                <p>最新食记</p>
+            </div>
+        </div>
+        {% for l in journals %}
+        <div class="col-sm-12">
+            <div class="row list-item" {% if forloop.last %}style="border-bottom:0" {% endif %}>
+                <div class="col-xs-1">
+                    <a href="/journal/{{ l.id }}/" class="img-hover">
+                        <img src="{{ MEDIA_URL }}{{ l.user.userprofile.avatar }}" class="img-responsive img-rounded" />
+                    </a>
+                </div>
+                <div class="col-xs-11">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <p><a href="/journal/{{ l.id }}/">{{ l.title }} <span class="pull-right visible-xs"><i class="fa fa-heart"></i> {{ l.like_num }}</span></a>
+                            </p>
+                            <p>
+                                <small>by <a href="/accounts/profile/{{ l.user.id }}/">{{ l.user.userprofile.nickname }}</a>
+                                </small>
+                            </p>
+                        </div>
+                        <div class="col-xs-2">
+                            <div class="row">
+                                <p style="color:#FD9F19"><i class="fa fa-heart"></i> {{ l.like_num }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="small color-grey">{{ l.preview }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+    <div class="col-sm-4">
+        <!-- sidebar -->
+        
+    </div>
+</div>
+
+
+
+{% endblock %}

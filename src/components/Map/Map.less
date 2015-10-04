@@ -1,0 +1,52 @@
+@import (reference) "../Base/Base";
+.Map {
+    width: 60%;
+    min-width: 500px;
+    display: inline-block;
+    .marker {
+        .transition(0.15s);
+        &:before {
+            position: absolute;
+            content: '';
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            background: lighten(@color-orange, 20%);
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+        &:after {
+            content: '';
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 50%;
+            background: @color-orange;
+            position: absolute;
+            transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+        }
+        &.active {
+            &:before {
+                border-radius: 50% 50% 50% 0;
+                transform: translateY(-2px) rotate(-45deg);
+                -webkit-transform: translateY(-2px) rotate(-45deg);
+            }
+            &:after {
+                background: @color-orange;
+                border-radius: 50% 50% 50% 0;
+                transform: translateY(-2px) rotate(-45deg);
+                -webkit-transform: translateY(-2px) rotate(-45deg);
+            }
+        }
+    }
+    .leaflet-popup-close-button {
+        display: none;
+    }
+    .leaflet-right {
+        right: initial;
+    }
+}

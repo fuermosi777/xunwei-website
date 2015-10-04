@@ -1,0 +1,207 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN" xmlns:wb="http://open.weibo.com/wb">
+{% load staticfiles %}
+
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="{{ STATIC_URL }}img/favicon-16x16.png" sizes="16x16" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="寻味,找寻中国人自己的味道">
+    <meta name="keywords" content="寻味,寻味美国,美国餐馆,美国餐馆点评,美国美食,纽约美食,纽约餐馆,北美餐馆,餐馆点评,纽约点评,寻味纽约">
+    <!-- itunes -->
+    <meta name="apple-itunes-app" content="app-id=944485146">
+    <!-- jQuery -->
+    <script src='https://code.jquery.com/jquery-1.11.1.min.js'></script>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <!-- leaflet -->
+    <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
+
+    <!-- fontawesome -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/font-awesome.min.css">
+
+    <!-- jasny -->
+    <script src="{{ STATIC_URL }}js/jasny-bootstrap.min.js"></script>
+    <link href="{{ STATIC_URL }}css/jasny-bootstrap.min.css" rel='stylesheet' />
+
+    <!-- style -->
+    <link href="{{ STATIC_URL }}css/style.css" rel="stylesheet">
+
+    <!-- GA -->
+    <script>
+    (function(i, s, o, g, r, a, m) {
+        i['GoogleAnalyticsObject'] = r;
+        i[r] = i[r] || function() {
+            (i[r].q = i[r].q || []).push(arguments)
+        }, i[r].l = 1 * new Date();
+        a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0];
+        a.async = 1;
+        a.src = g;
+        m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-53209729-1', 'auto');
+    ga('send', 'pageview');
+    </script>
+    <!-- statcounter -->
+    <script type="text/javascript">
+    var sc_project = 9792319;
+    var sc_invisible = 1;
+    var sc_security = "4ef1c75d";
+    var scJsHost = (("https:" == document.location.protocol) ?
+        "https://secure." : "http://www.");
+    document.write("<sc" + "ript type='text/javascript' src='" +
+        scJsHost +
+        "statcounter.com/counter/counter.js'></" + "script>");
+    </script>
+    <!-- End of StatCounter Code for Default Guide -->
+    <!-- google map geo api -->
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script>
+    var geocoder, lat, lng;
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(successFunction, errorFunction);
+    }
+    //Get the latitude and the longitude;
+    function successFunction(position) {
+        lat = position.coords.latitude;
+        lng = position.coords.longitude;
+    }
+
+    function errorFunction() {
+        alert("Geocoder failed");
+    }
+
+    function initialize() {
+        geocoder = new google.maps.Geocoder();
+    }
+
+    function codeLatLng(lat, lng) {
+        var latlng = new google.maps.LatLng(lat, lng);
+        geocoder.geocode({
+            'latLng': latlng
+        }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+                    for (var i = 0; i < results[0].address_components.length; i++) {
+                        for (var b = 0; b < results[0].address_components[i].types.length; b++) {
+                            //there are different types that might hold a city admin_area_lvl_1 usually does in come cases looking for sublocality type will be more appropriate
+                            if (results[0].address_components[i].types[b] == "neighborhood") {
+                                //this is the object you are looking for
+                                city = results[0].address_components[i];
+                                break;
+                            }
+                        }
+                    }
+                    $("input#city").val(city.long_name);
+                } else {}
+            } else {}
+        });
+    }
+    // init
+    $(document).ready(function() {
+        initialize();
+        $.get("http://ipinfo.io", function(response) {
+            if (response.city != null) {
+                $("input#city").val(response.city);
+            } else {
+                codeLatLng(lat, lng);
+            }
+        }, "jsonp");
+    });
+    </script>
+    {% block script %}{% endblock %}
+</head>
+
+<body>
+    {% block nav %}
+    <div class="navbar navbar-fixed-top hidden-sm hidden-md hidden-lg" role="navigation" style="background-color:rgba(255,255,255,0.8)">
+        <div class="container">
+            <div class="col-xs-3">
+                <a href="http://mp.weixin.qq.com/mp/redirect?url=https://itunes.apple.com/us/app/xun-wei-niu-yue/id944485146">
+                    <img src="https://s1.mzstatic.com/us/r30/Purple5/v4/31/2b/03/312b03f9-a546-f55e-57c4-e7465ca65533/icon340x340.png" class="img-responsive" style="border-radius:12px;margin-top:10px;margin-bottom: 10px;"/>
+                </a>
+            </div>
+            <div class="col-xs-9">
+                <p style="margin-top: 10px;margin-bottom: 10px;"><a href="http://mp.weixin.qq.com/mp/redirect?url=https://itunes.apple.com/us/app/xun-wei-niu-yue/id944485146">立即下载寻味美国APP<br>获取更多美食资讯</a></p>
+            </div>
+        </div>
+    </div>
+    <div class="hidden-sm hidden-md hidden-lg" style="height:80px;"></div>
+
+    <div class="navbar navbar-inverse navbar-static-top navbar-yellow hidden-xs" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                    <i class="fa fa-th-list"></i>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <div class="logo-image"></div>
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <form class="navbar-form navbar-left" role="form" action="/search/" method="GET">
+                    <div class="form-group">
+                        <input type="text" placeholder="开始寻味..." class="form-control form-control-search" name="keyword" id="keyword" autocomplete="off">
+                        <input type="text" placeholder="区域" class="form-control form-control-search" name="city" autocomplete="off" id="city" value="New York">
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-default">
+                            寻味
+                        </button>
+                    </div>
+                    <!-- /input-group -->
+                </form>
+                <ul class="nav navbar-nav navbar-right hidden-xs">
+                    <!-- laptop navbar -->
+                    {% if request.user.is_authenticated %}
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#" id="download">
+                            欢迎! {{ user }}
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="download">
+                            <li>
+                                <a href="/accounts/profile/{{ request.user.id }}/">我的寻味</a>
+                            </li>
+                            <li>
+                                <a href="/accounts/logout/">登出</a>
+                            </li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li>
+                        <a href="/accounts/login/{% if request.path == '/accounts/login/' %}?next=/{% else %}?next={{ request.path }}{% endif %}">登录</a>
+                    </li>
+                    <li>
+                        <a href="/accounts/register/">开始寻味</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+    {% endblock %} {% block caption %} {% endblock %} {% block content %} {% endblock %} {% block footer %}
+    <div id="footer">
+        <div class="container">
+            <p class="text-muted">
+                <small class="pull-left">Copyright © 2014 寻味 xun-wei.com All Rights Reserved.</small>
+                <small class="pull-right hidden-xs">
+                    <a href="/about-us/">关于我们</a> |
+                    <a href="/disclaimer/">协议声明</a>
+                    | <a class="color-orange" href="http://weibo.com/xunweinyc"><i class="fa fa-weibo"></i> 寻味微博</a>
+                </small>
+            </p>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+
+</html>

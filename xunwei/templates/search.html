@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+{% block title %}搜索 {{ keyword|default_if_none:'' }}{% endblock %}
+ {% block content %}
+<div class="container">
+    <div id="map" class="col-sm-8"></div>
+    
+    <div class="col-sm-4 col-sm-offset-8 map-list">
+        <div class="row map-list-item-caption hidden-xs">
+            <div class="col-sm-12">
+                {% if restaurant %}
+                    <p>共找到{{ restaurant.count }}个餐馆</p>
+                {% endif %}
+            </div> 
+        </div>
+        {% if error %}
+        <div class="col-sm-12">
+            <div class="alert alert-dismissable alert-danger">
+              <button type="button" class="close" data-dismiss="alert">×</button>
+              {{ error }}
+            </div>
+        </div>
+        {% endif %}
+
+        {% if restaurant %}
+        {% load endless %}
+        {% paginate 14 restaurant %}
+        {% for r in restaurant %}
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default" id="item-{{ r.id }}">
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-xs-8">
+                                <h4>
+                                    <span class="color-grey">{{ r.order }}.</span> <a href="/restaurant/{{ r.id }}/">{{ r.name }}</a>
+                                </h4>
+
+                                <div class="circle searchfood-circle">
+                                <h4><span class="label label-success label-as-badge">{{ r.average_star|default_if_none:"暂无评分" }}</span></h4>
+                                </div>
+                                <p>
+                                    <i class="fa fa-phone"></i> {{ r.phone }}
+                                </p>
+                                <p>
+                                    <i class="fa fa-map-marker"></i> {{ r.street1 }} {{ r.street2 }} {{ r.city }}
+                                </p>
+                                <p> 
+                                {% for s in r.subcategory.all %}
+                                    <small>{% if forloop.first %}<i class="fa fa-tags"></i> {% endif %}<a href="/search/?q={{ s }}">{{ s }}</a></small>
+                                {% endfor %}
+                                </p>
+                            </div>
+                            <div class="col-xs-4">
+                                <a href="/restaurant/{{ r.id }}/"><img class="img-responsive img-rounded" src="{{ MEDIA_URL }}{{ r.photo }}"/></a>
+                            </div>
+                        </div>
+                    </div>
+                    {% if r.review %}
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-xs-2">
+                                <img class="img-responsive img-circle" src="{{ r.review.user.userprofile.avatar.url }}" />
+                            </div>
+                            <div class="col-xs-10">
+                                <p>{{ r.review.user }}点评:</p>
+                                <p>{{ r.review.review }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+        <div class="row map-list-item list-item-nohover">
+            <div class="pages col-sm-6 col-sm-offset-3">
+                {% show_pages %}
+            </div>
+        </div>
+        {% endif %}    
+    </div>
+
+</div>
+
+<script>
+L.mapbox.accessToken = 'pk.eyJ1IjoiZnVlcm1vc2k3NzciLCJhIjoidXRyY2VfUSJ9.eAxVQWWk97vLH4wa4aa1ig';
+var map = L.mapbox.map('map', 'fuermosi777.i88jhog0')
+    .setView([{{ initial_latitude }}, {{ initial_longitude }}], 12);
+
+    map.on('mouseup', function(e) { 
+        //console.log("Lat, Lon : " + e.latlng.lat + ", " + e.latlng.lng);
+        $('#map-button-a').attr('href','{{ request.path }}?subcategory={{ subcategory|default_if_none:'' }}&lat='+e.latlng.lat+'&lng='+e.latlng.lng+'');
+    });
+
+var markers = new Array();
+
+{% for restaurant in restaurant %}
+var popHtml = 
+    '<div class="row">'+
+        '<div class="col-xs-5">'+
+            '<a href="/restaurant/{{ restaurant.id }}"><img class="img-responsive img-rounded" src="{{ MEDIA_URL }}{{ restaurant.photo }}"/></a>'+
+        '</div>'+
+        '<div class="col-xs-7">'+
+            '<p><span class="color-grey">{{ restaurant.order }}.</span> <a class="map-link" href="/restaurant/{{ restaurant.id }}">{{ restaurant.name }}</a></p><p><i class="fa fa-map-marker"></i> {{ restaurant.street1 }} {{ restaurant.street2 }} {{ restaurant.city }} {{ restaurant.postcode }}'+
+            '</p>'+
+        '</div>'+
+    '</div>'
+;
+var marker = new L.marker([{{ restaurant.latitude }}, {{ restaurant.longitude }}]).bindPopup(popHtml).addTo(map).on('mouseover', function(evt) {
+  //evt.target is the marker that is being moused over 
+  evt.target.openPopup();
+});
+markers[{{ restaurant.id }}] = marker;
+$('#item-{{ restaurant.id }}').on('mouseover', function(evt) {
+    
+    markers[{{ restaurant.id }}].openPopup();
+});
+{% endfor %}
+</script>
+
+
+
+{% endblock %}

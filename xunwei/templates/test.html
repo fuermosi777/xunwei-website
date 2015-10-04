@@ -1,0 +1,89 @@
+{% extends "base_profile.html" %} {% block title %} 关注动态 {% endblock %} 
+{% block caption %}最新动态{% endblock %} 
+{% block content %}
+{% load timesince %}
+
+{% if activity %} {% load endless %} {% lazy_paginate 10 activity %} {% for a in activity %}
+<div class="row profile-list-item">
+    <div class="col-sm-1 col-ms-2 col-xs-2">
+        <a href="/accounts/profile/{{ a.user.id }}/">
+            <img class="img-responsive img-rounded img-avatar img-hover" src="{{ MEDIA_URL }}{{ a.user.userprofile.avatar }}">
+        </a>
+    </div>
+    <div class="col-sm-11 col-ms-10 col-xs-10">
+        {% if a.content_type.model == 'review' %}
+        <p><a href="/accounts/profile/{{ a.user.id }}/">{{ a.user.userprofile.nickname }}</a> 点评了 <a href="/restaurant/{{ a.content_object.restaurant.id }}/">{{ a.content_object.restaurant }}</a>
+        </p>
+        <p>"{{ a.content_object.review }}"</p>
+        <p>
+            <div class="row">
+                <div class="col-xs-3 col-sm-2">
+                	<a href="/restaurant/{{ a.content_object.restaurant.id }}/"><img src="{{ MEDIA_URL }}{{ a.content_object.restaurant.photo }}" class="img-responsive img-rounded img-hover" /></a>
+                </div>
+            </div>
+        </p>
+        <div class="color-grey small"><i class="fa fa-clock-o"></i> {{ a.date|timesince_human }}
+        {% if request.user.is_authenticated %}
+            <form role="form" action="" method="POST">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                <input type="hidden" name="review_id" value="{{ a.content_object.id }}" />
+                <input type="hidden" name="user_id" value="{{ request.user.id }}" />
+                <button class="pull-right like-review-button ajax-button-a" href=""><i class="fa fa-heart"></i> {{ a.content_object.like_num|default_if_none:'0' }}</button>
+            </form>
+        {% else %}
+        <a class="pull-right ajax-button-a" href="/accounts/login/?next={{ request.path }}"><i class="fa fa-heart"></i> {{ a.content_object.like_num|default_if_none:'0' }}</a>
+        {% endif %}
+        </div>
+        {% elif a.content_type.model == 'journal' %}
+        <p><a href="/accounts/profile/{{ a.user.id }}/">{{ a.user.userprofile.nickname }}</a> 写了一篇食记 <a href="/journal/{{ a.content_object.id }}/">{{ a.content_object.title }}</a>
+        </p>
+        <p class="color-grey small"><i class="fa fa-clock-o"></i> {{ a.date|timesince_human }}</p>
+        <span class="pull-right">
+            {% if request.user.is_authenticated %}
+            <form role="form" action="" method="POST">
+                <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+                <input type="hidden" name="journal_id" value="{{ a.content_object.id }}" />
+                <input type="hidden" name="user_id" value="{{ request.user.id }}" />
+                <button class="pull-right like-journal-button ajax-button-a" href=""><i class="fa fa-heart"></i> {{ a.content_object.like_num|default_if_none:'0' }}</button>
+            </form>
+            {% else %}
+            <a class="pull-right ajax-button-a" href="/account/login/?next={{ request.path }}"><i class="fa fa-heart"></i> {{ a.content_object.like_num|default_if_none:'0' }}</a>
+            {% endif%}
+        </span>
+        {% elif a.content_type.model == 'journal_comment' %}
+        <p><a href="/accounts/profile/{{ a.user.id }}/">{{ a.user.userprofile.nickname }}</a> 评论了食记 <a href="/journal/{{ a.content_object.journal.id }}/">{{ a.content_object.journal.title }}</a>
+        </p>
+        <p>"{{ a.content_object.comment }}"</p>
+        <p class="color-grey small"><i class="fa fa-clock-o"></i> {{ a.date|timesince_human }}</p>
+        {% elif a.content_type.model == 'status' %} {% if a.content_object.status == 1 %}
+        <p><a href="/accounts/profile/{{ a.user.id }}/">{{ a.user.userprofile.nickname }}</a> 吃过 <a href="/restaurant/{{ a.content_object.restaurant.id }}/">{{ a.content_object.restaurant }}</a>
+        </p>
+        <p class="color-grey small"><i class="fa fa-clock-o"></i> {{ a.date|timesince_human }}</p>
+        {% elif a.content_object.status == 2 %}
+        <p><a href="/accounts/profile/{{ a.user.id }}/">{{ a.user.userprofile.nickname }}</a> 想吃 <a href="/restaurant/{{ a.content_object.restaurant.id }}/">{{ a.content_object.restaurant }}</a>
+        </p>
+        <p class="color-grey small"><i class="fa fa-clock-o"></i> {{ a.date|timesince_human }}</p>
+        {% endif %} {% elif a.content_type.model == 'like' %}
+        <p><a href="/accounts/profile/{{ a.user.id }}/">{{ a.user.userprofile.nickname }}</a> 喜欢了 <a href="/accounts/profile/{{ a.content_object.review.user.id }}/">{{ a.content_object.review.user.userprofile.nickname }}</a> 的点评
+        </p>
+        <p>"{{ a.content_object.review.review }}"</p>
+        <p class="color-grey small"><i class="fa fa-clock-o"></i> {{ a.date|timesince_human }}</p>
+        {% elif a.content_type.model == 'like_journal' %}
+        <p><a href="/accounts/profile/{{ a.user.id }}/">{{ a.user.userprofile.nickname }}</a> 喜欢了 <a href="/accounts/profile/{{ a.content_object.journal.user.id }}/">{{ a.content_object.journal.user.userprofile.nickname }}</a> 的食记 <a href="/journal/{{ a.content_object.journal.id }}/">{{ a.content_object.journal.title }}</a>
+        </p>
+        <p class="color-grey small"><i class="fa fa-clock-o"></i> {{ a.date|timesince_human }}</p>
+        {% elif a.content_type.model == 'follow' %}
+        <p><a href="/accounts/profile/{{ a.user.id }}/">{{ a.user.userprofile.nickname }}</a> 关注了 <a href="/accounts/profile/{{ a.content_type.followee.id }}/">{{ a.content_type.followee.userprofile.nickname }}</a>
+        </p>
+        <p class="color-grey small"><i class="fa fa-clock-o"></i> {{ a.date|timesince_human }}</p>
+        {% endif %}
+    </div>
+</div>
+{% endfor %}
+<div class="row profile-list-item list-item-nohover">
+    <div class="pages text-center">{% show_pages %}</div>
+</div>
+{% else %}
+<p>还没有什么动静……</p>
+{% endif %}
+{% endblock %}

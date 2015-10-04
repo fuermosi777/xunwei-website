@@ -1,0 +1,82 @@
+@import (reference) "../Base/Base.less";
+.Post {
+    width: 50%;
+    display: inline-block;
+    left: 50%;
+    position: absolute;
+    background-color: white;
+    height: 100%;
+    .wrapper {
+        padding: 40px;
+        overflow-y: auto;
+        height: 100%;
+        padding-bottom: 50px;
+        p.title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .body {
+            p {
+                font-size: 1.4rem;
+                line-height: 1.6;
+                margin-bottom: 10px;
+            }
+            img {
+                max-width: 100%;
+            }
+        }
+    }
+    span.close {
+        display: block;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        top: 0;
+        left: -40px;
+        color: rgba(0, 0, 0, 0.5);
+        background-color: white;
+        position: absolute;
+        font-size: 30px;
+        cursor: pointer;
+    }
+    a.source {
+        display: block;
+        width: 100%;
+        text-align: center;
+        height: 40px;
+        line-height: 40px;
+        color: #848484;
+        margin-top: 20px;
+        margin-bottom: 100px;
+        font-style: 1.3rem;
+        background: #E6E6E6;
+    }
+    p.copy {
+        text-align: center;
+        font-style: 1rem;
+        margin-bottom: 40px;
+    }
+    .star {
+        margin-top: 10px;
+        line-height: 30px;
+        vertical-align: middle;
+        color: #999;
+        border: 1px solid;
+        display: inline-block;
+        border-radius: 2px;
+        padding: 0 10px;
+        cursor: pointer;
+        span {
+            font-size: 1.4rem;
+            vertical-align: middle;
+        }
+        &:hover {
+            color: @color-orange;
+        }
+        i {
+            font-size: 23px;
+            vertical-align: middle;
+        }
+    }
+}

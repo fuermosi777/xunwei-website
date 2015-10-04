@@ -1,0 +1,59 @@
+{% extends "base.html" %} {% block title %}寻味{% endblock %} {% block caption %} {% endblock %} {% block content %}
+<div style="height: 600px;
+background-color: #F39C12;
+margin-top: -20px;
+margin-bottom: 60px;overflow:hidden">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6" style="padding-top:10%;">
+                <div class="logo-image" style="margin: 0 auto;width: 60px;height: 60px;background-size: 60px 60px;"></div>
+                <h1 class="text-center color-white">寻味美国，找寻中国人自己的味道</h1>
+                <h2 class="text-center color-white">现在起可以到App Store下载了</h2>
+                <!-- itunes link-->
+                <h1 class="text-center">
+                    <a href="https://itunes.apple.com/us/app/xun-wei-niu-yue/id944485146?mt=8&uo=4" target="itunes_store" style="display:inline-block;overflow:hidden;background:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_appstore-lrg.png) no-repeat;width:135px;height:40px;@media only screen{background-image:url(https://linkmaker.itunes.apple.com/htmlResources/assets/en_us//images/web/linkmaker/badge_appstore-lrg.svg);}"></a>
+                </h1>
+                <p class="text-center">
+                    {% for c in citys %}
+                        <a href="/search/?city={{ c.city }}" class="color-white">{{ c.city }} {% if not forloop.last %}•{% endif %}</a>
+                    {% endfor %}
+                </p>
+            </div>
+            <div class="col-sm-6">
+                <img src="{{ STATIC_URL }}img/iphone.png" class="img-responsive" style="margin:0 auto" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container">
+{% for c in citys %}
+    <div class="page-header">
+        <link href='http://fonts.googleapis.com/css?family=Lobster' rel='stylesheet' type='text/css'>
+        <h1 style="font-family: 'Lobster', cursive;" class="text-center">{{ c }}</h1>
+    </div>
+    {% for r in c.restaurant %}
+    <div class="col-sm-3 col-xs-6">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4><a href="/restaurant/{{ r.id }}">{{ r.name }}</a></h4>
+                <p>{{ r.name2 }}</p>
+            </div>
+            <div class="panel-body">
+                <a href="/restaurant/{{ r.id }}">
+                    <img class="img-responsive img-rounded" src="{{ r.photo.url }}" />
+                </a>
+            </div>
+            <div class="panel-footer">
+                <p><span class="fa fa-tag"></span> {% for s in r.subcategory.all %}{{ s.name }} {% endfor %}</p>
+                <p><span class="fa fa-map-marker"></span> {{ r.street1 }} {{ r.city }} {{ r.city.state }} {{ r.postcode }}</p>
+                <p><a class="btn btn-block btn-warning" href="/restaurant/{{ r.id }}/">详情</a></p>
+            </div>
+        </div>
+    </div>
+    {% cycle '' '<div class="clearfix hidden-sm hidden-md hidden-lg"></div>' '' '<div class="clearfix hidden-xs"></div>' %} {% endfor %}
+{% endfor %}
+</div>
+
+
+
+{% endblock %}

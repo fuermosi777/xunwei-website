@@ -1,0 +1,110 @@
+* {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    //-webkit-backface-visibility: hidden;
+}
+
+html {
+    font-size: 62.5%;
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    font-family: 'Hiragino Sans GB', 'WenQuanYi Micro Hei', 'Lantinghei SC', 'Open Sans', Arial, 'Microsoft YaHei', '微软雅黑', STHeiti, SimSun, Helvetica, sans-serif !important;
+    font-weight: normal;
+    line-height: 1.6;
+    margin: 0;
+    height: 100%;
+    -webkit-overflow-scrolling: touch;
+    @media @xs {
+        overflow: hidden;
+    }
+}
+
+#container {
+    height: 100%;
+}
+
+html,
+body,
+input,
+button {
+    font-family: inherit;
+}
+
+.App {
+    height: 100%;
+    @media @xs {
+        overflow-x: hidden;
+    }
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+}
+
+ul,
+li {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:active,
+a:hover {
+    outline: 0;
+}
+
+.hidden-xs {
+    @media @xs {
+        display: none !important;
+        opacity: 0;
+    }
+}
+
+.hidden-sm {
+    @media @sm {
+        display: none !important;
+        opacity: 0;
+    }
+}
+
+.hidden-md {
+    @media @md {
+        display: none !important;
+        opacity: 0;
+    }
+}
+
+.hidden-lg {
+    @media @lg {
+        display: none !important;
+        opacity: 0;
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+button,
+input {
+    &:focus {
+        outline: none;
+    }
+}

@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}| {{ tag }}{% endblock %}
+{% block noscript %}
+    <h2>含有标签 {{ tag }} 的餐馆</h2>
+    <ul>
+    {% for b in business %}
+        <li><a href="/business/{{ b.id }}">{{ b.name }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

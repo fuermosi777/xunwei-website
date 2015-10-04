@@ -1,0 +1,90 @@
+@import (reference) "../Base/Base.less";
+
+.PostList {
+    width: 40%;
+    display: inline-block;
+    left: 60%;
+    position: absolute;
+    height: 100%;
+    .wrapper {
+        height: 100%;
+        overflow-y: auto;
+        background-color: white;
+        padding-bottom: 50px;
+    }
+    .info {
+        padding: 20px;
+        .photo {
+            background-size: cover;
+            background-position: center center;
+            border-radius: 4px;
+            height: 200px;
+            width: 100%;
+            margin-bottom: 10px;
+            position: relative;
+            .tags {
+                position: absolute;
+                left: 10px;
+                bottom: 10px;
+            }
+            .tag {
+                background-color: rgba(0, 0, 0, 0.5);
+                color: white;
+                padding: 3px 5px;
+                border-radius: 2px;
+                font-size: 1.2rem;
+                margin-right: 5px;
+            }
+        }
+        p.name {
+            font-size: 1.4rem;
+            color: @color-orange;
+        }
+        p.location {
+            color: #848484;
+        }
+    }
+    ul.post-list {
+        li {
+            padding: 10px 20px;
+            cursor: pointer;
+            &:hover {
+                background-color: rgba(0, 0, 0, 0.05);
+            }
+        }
+    }
+    .title {
+        color: #555961;
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+    .body {
+        p {
+            font-size: 1.3rem;
+            color: #8C9094;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+            max-width: 400px;
+            margin-bottom: 10px;
+        }
+    }
+    span.close {
+        display: block;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        top: 0;
+        left: -40px;
+        color: rgba(0, 0, 0, 0.5);
+        background-color: white;
+        position: absolute;
+        font-size: 30px;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,87 @@
+.background-size() {
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.transition(@time: 0.5s, @easing: ease-in-out, @type: all) {
+    -webkit-transition: @type @time @easing;
+    -moz-transition: @type @time @easing;
+    -o-transition: @type @time @easing;
+    transition: @type @time @easing;
+}
+
+.gradient-vertical (@top-color, @bottom-color) {
+    background: -moz-linear-gradient(top, @top-color 60%, @bottom-color 100%);
+    /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(60%, @top-color), color-stop(100%, @bottom-color));
+    /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(top, @top-color 60%, @bottom-color 100%);
+    /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(top, @top-color 60%, @bottom-color 100%);
+    /* Opera 11.10+ */
+    background: -ms-linear-gradient(top, @top-color 60%, @bottom-color 100%);
+    /* IE10+ */
+    background: linear-gradient(to bottom, @top-color 60%, @bottom-color 100%);
+    /* W3C */
+}
+
+.box-shadow () {
+    -webkit-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.black-and-white () {
+    -webkit-filter: grayscale(100%);
+    -moz-box-shadow: grayscale(100%);
+    -o-box-shadow: grayscale(100%);
+    filter: grayscale(100%);
+}
+
+.colorful () {
+    -webkit-filter: grayscale(0);
+    -moz-box-shadow: grayscale(0);
+    -o-box-shadow: grayscale(0);
+    filter: grayscale(0);
+}
+
+.transformTranslate(@x, @y) {
+    transform: translateY(@y) translateX(@x);
+    -o-transform: translateY(@y) translateX(@x);
+    -moz-transform: translateY(@y) translateX(@x);
+    -webkit-transform: translateY(@y) translateX(@x);
+}
+
+.transformTranslateY(@per: -50%) {
+    transform: translateY(@per);
+    -o-transform: translateY(@per);
+    -moz-transform: translateY(@per);
+    -webkit-transform: translateY(@per);
+}
+
+.transformTranslateX(@per: -50%) {
+    transform: translateX(@per);
+    -o-transform: translateX(@per);
+    -moz-transform: translateX(@per);
+    -webkit-transform: translateX(@per);
+}
+
+.transformRotate(@deg: 90deg) {
+    transform: rotate(@deg);
+    -ms-transform: rotate(@deg);
+    -webkit-transform: rotate(@deg);
+}
+
+.scale(@zoom) {
+    -webkit-transform: scale(@zoom);
+    -ms-transform: scale(@zoom);
+    transform: scale(@zoom);
+}
+
+.shadowBorderRight(@color) {
+    -webkit-box-shadow: inset -1px 0 0 @color;
+    -moz-box-shadow: inset -1px 0 0 @color;
+    box-shadow: inset -1px 0 0 @color;
+}

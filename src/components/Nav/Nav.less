@@ -1,0 +1,51 @@
+@import (reference) "../Base/Base.less";
+
+.Nav {
+    height: 50px;
+    background: #201E21;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    img.logo {
+        display: block;
+        width: 20px;
+        margin: 10px 0 0 20px;
+    }
+    .xunwei {
+        font-size: 1.4rem;
+        font-weight: bold;
+        position: absolute;
+        display: inline-block;
+        height: 100%;
+        width: 200px;
+        line-height: 50px;
+        left: 50px;
+        top: 0;
+        .zh {
+            color: @color-orange;
+        }
+        .en {
+            color: white;
+        }
+    }
+    .right {
+        cursor: pointer;
+        position: absolute;
+        display: inline-block;
+        height: 100%;
+        width: 100%;
+        color: white;
+        line-height: 50px;
+        font-size: 1.4rem;
+        font-weight: bold;
+        top: 0;
+        right: 20px;
+        text-align: right;
+        span {
+            display: inline-block;
+            margin: 0 5px;
+        }
+    }
+}

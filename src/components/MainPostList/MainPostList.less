@@ -1,0 +1,86 @@
+@import (reference) "../Base/Base.less";
+.MainPostList {
+    width: 40%;
+    display: inline-block;
+    left: 60%;
+    position: absolute;
+    height: 100%;
+    background-color: white;
+    .wrapper {
+        height: 100%;
+        overflow-y: auto;
+        padding-bottom: 50px;
+        ul.tag-list {
+            padding: 10px 20px;
+            li {
+                display: inline-block;
+                background-color: @color-orange;
+                color: white;
+                border-radius: 2px;
+                padding: 2px 5px;
+                margin: 0 5px 5px 0;
+                font-size: 1.1rem;
+                cursor: pointer;
+            }
+        }
+        ul.post-list {
+            li {
+                list-style-type: none;
+                display: block;
+                padding: 10px 20px;
+                position: relative;
+                .left {
+                    display: inline-block;
+                    width: 80px;
+                    height: 80px;
+                    overflow: hidden;
+                    background-size: cover;
+                    float: left;
+                }
+                .right {
+                    padding: 0 10px 10px 100px;
+                    line-height: 1.4;
+                    p.title {
+                        font-size: 1.4rem;
+                        margin-bottom: 5px;
+                        cursor: pointer;
+                    }
+                    p.preview {
+                        font-size: 1.1rem;
+                        margin-bottom: 10px;
+                        cursor: pointer;
+                    }
+                    p.tag {
+                        span.tag-item {
+                            color: white;
+                            background-color: #9A9A9A;
+                            border-radius: 2px;
+                            padding: 2px 5px;
+                            margin-right: 5px;
+                        }
+                    }
+                    p.name {
+                        color: #4e4e4e;
+                        font-size: 1.1rem;
+                        margin-top: 10px;
+                        margin-bottom: 5px;
+                        cursor: pointer;
+                    }
+                    p.location {
+                        color: @color-orange;
+                        font-size: 1.1rem;
+                    }
+                }
+            }
+        }
+        .load-more {
+            text-align: center;
+            background-color: #E6E6E6;
+            font-size: 1rem;
+            height: 44px;
+            width: 100%;
+            line-height: 44px;
+            cursor: pointer;
+        }
+    }
+}

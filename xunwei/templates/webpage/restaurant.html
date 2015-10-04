@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block script %}
+
+{% endblock %}
+
+{% block nav %}
+<style>
+	.navbar-yellow {
+		background: rgba(255,255,255,0.9);
+		height: 64px;
+	}
+	a {
+		color: #E49529 !important;
+	}
+	body {
+		background: #DEDEDE;
+	}
+</style>
+
+<div class="navbar navbar-yellow navbar-fixed-top" role="navigation">
+    <div class="container">
+    	<div class="col-xs-3">
+	    	<a href="http://mp.weixin.qq.com/mp/redirect?url=https://itunes.apple.com/us/app/xun-wei-niu-yue/id944485146">
+	    		<img src="https://s1.mzstatic.com/us/r30/Purple5/v4/31/2b/03/312b03f9-a546-f55e-57c4-e7465ca65533/icon340x340.png" class="img-responsive" style="border-radius:12px;margin-top:10px;"/>
+	    	</a>
+    	</div>
+    	<div class="col-xs-9">
+    		<p style="margin-top: 10px;"><a href="http://mp.weixin.qq.com/mp/redirect?url=https://itunes.apple.com/us/app/xun-wei-niu-yue/id944485146">立即下载寻味纽约app<br>获取更多资讯</a></p>
+    	</div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block title %}{{ restaurant.name }}{% endblock %}
+{% block caption %}
+<div class="row restaurant-caption">
+	<div class="carousel slide">
+		<div class="carousel-inner">
+			<div class="restaurant-hero" style="background: url('{{ MEDIA_URL }}{{ restaurant.photo }}')"></div>
+			<div class="carousel-caption restaurant-hero-caption animated fadeInDown">
+				<h1>{{ restaurant.name }}</h1>
+				
+				<h2>&nbsp;{% if restaurant.name2 %}- {{ restaurant.name2 }} -{% endif %}&nbsp;</h2>
+				
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+	<div class="row restaurant-special-row">
+		<div class="col-sm-12">
+				<div class="panel">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-xs-12">
+								<p class="rating-p text-center">{{ avg_star }}</p>
+								<p class="color-grey text-center">{{ restaurant.eaten_num }}</p>
+							</div>
+							<div class="col-xs-12">
+								<p class="small">
+									<a href="http://maps.google.com/?q={{ restaurant.street1 }} {{ restaurant.street2 }} {{ restaurant.city }} {{ restaurant.postcode }}">
+										<i class="fa fa-map-marker"></i>
+										{{ restaurant.street1 }} {{ restaurant.street2 }} {{ restaurant.city }} {{ restaurant.postcode }}
+									</a>
+								</p>
+								<p class="small">
+								<a href="tel:+1{{ restaurant.phone }}"> <i class="fa fa-phone"></i>
+									{{ restaurant.phone }}
+								</a>
+							</p>
+							<p class="small" style="word-wrap: break-word;">
+								<a href="{{ restaurant.website }}">
+									<i class="fa fa-laptop"></i>
+									{{ restaurant.website }}
+								</a>
+							</p>
+							<p class="small" style="word-wrap: break-word;">
+								<a>
+									<i class="fa fa-money"></i>
+									人均价格: {{ avg_price }}
+								</a>
+							</p>
+							<p>
+								{% for s in subcategory %}
+								<a href="/search/?q={{ s.name }}" class="small"><i class="fa fa-tag"></i> {{ s.name }} </a>
+								{% endfor %}
+							</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- restaurant introduction -->
+				<div class="panel restaurant-review-panel">
+					<div class="panel-body list-item-nohover">
+						<p>{{ restaurant.name }} 简介</p>
+					</div>
+					<div class="panel-body list-item-nohover">
+						<p>{{ restaurant.description }}</p>
+					</div>
+				</div>
+							
+		</div>
+	</div>
+	<div class="panel">
+		<div class="panel-body restaurant-map">
+			<div id="restaurant-map" style="height:300px;"></div>
+		</div>
+	</div>
+	<h5 class="page-header color-grey">相似餐馆</h5>
+	{% for s in similar_restaurant %}
+	<div class="row similar-restaurant">
+		<div class="col-sm-4 col-xs-3">
+			<a href="/restaurant/{{ s.id }}/">
+				<img class="img-responsive img-rounded img-hover" src="{{ MEDIA_URL }}{{ s.photo }}" />
+			</a>
+		</div>
+		<div class="col-sm-8 col-xs-9">
+			<p><a href="/restaurant/{{ s.id }}">{{ s.name }}</a></p>
+			<p class="color-grey small"><i class="fa fa-map-marker"></i> {{ s.street1 }} {{ s.street2 }} {{ s.city }} {{ s.postcode }}</p>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+<script>
+// draw map
+var map = L.map('restaurant-map').setView([{{ restaurant.latitude }}, {{ restaurant.longitude }}], 14);
+L.tileLayer('http://{s}.tiles.mapbox.com/v3/fuermosi777.i88jhog0/{z}/{x}/{y}.png', {
+    attribution: '寻味',
+    maxZoom: 18
+}).addTo(map);
+
+// Disable drag and zoom handlers.
+map.dragging.disable();
+map.touchZoom.disable();
+map.doubleClickZoom.disable();
+map.scrollWheelZoom.disable();
+
+// Disable tap handler, if present.
+if (map.tap) map.tap.disable();
+</script>
+<script>
+L.marker([{{ restaurant.latitude }}, {{ restaurant.longitude }}]).addTo(map).bindPopup('<p class="restaurant-map-box-p"><a class="map-link" href="#">{{ restaurant.name }}</a></p>').openPopup();
+</script>
+{% endblock %}

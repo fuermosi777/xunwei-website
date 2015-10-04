@@ -1,0 +1,88 @@
+{% extends "base.html" %} {% block title %}{{ user.userprofile.nickname }}{% endblock %} {% block caption %} {% endblock %} {% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-sm-2 col-sm-offset-5  col-xs-6 col-xs-offset-3">
+                            <img src="{{ user.userprofile.avatar.url }}" class="img-responsive img-circle" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <h1 class="text-center">{{ user.userprofile.nickname }}</h1>
+                        <p class="text-center">{{ user.date_joined|date:"Y年m月d日" }}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4 col-xs-8 col-xs-offset-2">
+                            <div class="row">
+                                <a href="#review" class="tab-nav">
+                                    <div class="col-xs-4">
+                                        <p class="text-center">{{ review.count }}</p>
+                                        <p class="text-center">点评</p>
+                                    </div>
+                                </a>
+                                <a href="#collect" class="tab-nav">
+                                    <div class="col-xs-4">
+                                        <p class="text-center">{{ status.count }}</p>
+                                        <p class="text-center">收藏</p>
+                                    </div>
+                                </a>
+                                <a href="#review">
+                                    <div class="col-xs-4">
+                                        <p class="text-center">0</p>
+                                        <p class="text-center">喜欢</p>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div id="review">
+            {% for r in review %}
+            <div class="col-xs-6 col-sm-2">
+                <div class="panel panel-default">
+                    <img src="{{ r.restaurant.photo.url }}" class="img-responsive" />
+                    <div class="panel-body">
+                        <p><a href="/restaurant/{{ r.restaurant.id }}/">{{ r.restaurant.name }}</a></p>
+                        <p>{{ r.review_date|date:"Y年m月d日" }}</p>
+                        <p>{{ r.review }}</p>
+                    </div>
+                </div>
+            </div>
+            {% cycle '' '<div class="clearfix hidden-sm hidden-md hidden-lg"></div>' '' '' '' '<div class="clearfix hidden-xs"></div>' %}
+            {% endfor %}
+        </div>
+        <div id="collect" class="hidden">
+            {% for s in status %}
+            <div class="col-xs-6 col-sm-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5>{{ s.restaurant.name }}</h5>
+                    </div>
+                    <div class="panel-body">
+                        <img src="{{ s.restaurant.photo.url }}" class="img-responsive" />
+                    </div>
+                </div>
+            </div>
+            {% cycle '' '<div class="clearfix hidden-sm hidden-md hidden-lg"></div>' '' '' '' '<div class="clearfix hidden-xs"></div>' %}
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<script>
+    $(".tab-nav").on("click",function(e){
+        e.preventDefault();
+        var id = $(this).attr('href');
+        $("#review").addClass("hidden");
+        $("#collect").addClass("hidden");
+        $(id).removeClass("hidden");
+    });
+</script>
+
+{% endblock %}
