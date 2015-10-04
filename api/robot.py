@@ -33,6 +33,7 @@ def post(request):
         body=post_data['content'],
         source=url,
         business=business,
+        is_approved=True,
         )
     post.save()
     try:

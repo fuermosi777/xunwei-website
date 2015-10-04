@@ -102,7 +102,7 @@ export default React.createClass({
         return new Promise((resolve, reject) => {
             $.ajax({
                 method: 'POST',
-                url: 'http://localhost:8000/api/upload_image_url/',
+                url: '/api/upload_image_url/',
                 data: {
                     image_url: url,
                     source_domain: this.extractDomain(this.state.source)
@@ -121,7 +121,7 @@ export default React.createClass({
         return new Promise((resolve, reject) => {
             $.ajax({
                 method: 'POST',
-                url: 'http://localhost:8000/api/add_post/',
+                url: '/api/secret_add_post/',
                 data: data,
                 success(res) {
                     resolve(res);
