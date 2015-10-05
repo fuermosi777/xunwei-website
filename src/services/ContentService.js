@@ -5,8 +5,8 @@ export default {
     getBusinessList(start=0, hot_area='', tag='') {
         return Basic.GET(Url.businessList(start, hot_area, tag));
     },
-    getPostList(start=0, business_id='', hot_area='', tag='') {
-        return Basic.GET(Url.postList(start, business_id, hot_area, tag));
+    getPostList(start=0, business_id='', hot_area='', tag='', q='') {
+        return Basic.GET(Url.postList(start, business_id, hot_area, tag, q));
     },
     getPost(post_id) {
         return Basic.GET(Url.post(post_id));

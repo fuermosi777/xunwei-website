@@ -4,6 +4,7 @@ import { DefaultRoute, Link, Route, RouteHandler } from 'react-router';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 import HomePage from './pages/HomePage.jsx';
 import SecretPage from './pages/SecretPage.jsx';
+import 'babel-runtime/core-js/promise';
 
 React.render((
     <Router history={createBrowserHistory()}>

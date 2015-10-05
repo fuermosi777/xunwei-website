@@ -2,6 +2,12 @@ import React from 'react';
 import Style from './MainPostList.less';
 
 export default React.createClass({
+    getInitialState() {
+        return {
+            keyword: ''
+        };
+    },
+
     render() {
         let List = this.props.post.map((item, i) => {
             return (
@@ -28,6 +34,11 @@ export default React.createClass({
         return (
             <div className="MainPostList">
                 <div className="wrapper">
+                    <div className="search-box">
+                        {this.state.keyword ? '' : <label>开始搜索: 中餐、火锅、汉堡...</label>}
+                        <input className="keyword-input" type="text" autocomplete="off" onChange={this.handleKeywordChange} onKeyDown={this.handleKeywordKeyDown}/>
+                        <i className="ion-android-search search-button" onClick={this.handleSearch}/>
+                    </div>
                     <ul className="tag-list">
                         {Tag}
                     </ul>
@@ -38,6 +49,21 @@ export default React.createClass({
                 </div>
             </div>
         );
+    },
+
+    handleKeywordChange(e) {
+        this.setState({keyword: e.target.value});
+    },
+
+    handleKeywordKeyDown(e) {
+        if (e.keyCode === 13) {
+            this.handleSearch();
+        }
+    },
+
+    handleSearch() {
+        if (!this.state.keyword) return;
+        this.props.onSearch(this.state.keyword);
     },
 
     handlePostClick(post) {

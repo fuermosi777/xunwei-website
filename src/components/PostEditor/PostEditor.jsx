@@ -23,7 +23,7 @@ export default React.createClass({
                     <input placeholder="输入文章标题" onChange={this.handleInputChange.bind(this, 'title')} className="title-input"/>
                     <input type="file" className="image-upload-input" ref="imageUploadInput" onChange={this.handleImageInputChange}/> 
                     <button onClick={this.handleAddImageClick}><i className="ion-android-image"/> 添加图片</button>
-                    <div className="textarea" contentEditable="true" onPaste={this.handlePaste} ref="textarea"></div>
+                    <div className="textarea" contentEditable="true" onPaste={this.handlePaste} onChanage={this.handleTextareaChange} ref="textarea"></div>
                     <button onClick={this.handleSubmitClick}>提交审核</button>
                 </div>}
             </div>
@@ -34,7 +34,12 @@ export default React.createClass({
         React.findDOMNode(this.refs.imageUploadInput).click();
     },
 
+    handleTextareaChange() {
+        
+    },
+
     handleImageInputChange(e) {
+        let exsitingHTML = React.findDOMNode(this.refs.textarea).innerHTML;
         if (!e.target.files[0]) return;
         var formData = new FormData();
         var file = e.target.files[0];
@@ -45,7 +50,8 @@ export default React.createClass({
             this.setState({loading: true});
             ContentService.uploadImage(btoa(binaryString)).then((res) => {
                 this.setState({loading: false});
-                React.findDOMNode(this.refs.textarea).innerHTML += `<img src="${res.link}"/>`;
+                
+                React.findDOMNode(this.refs.textarea).innerHTML = exsitingHTML + `<img src="${res.link}"/>`;
             }).catch((err) => {
                 this.setState({loading: false});
                 console.log(err);

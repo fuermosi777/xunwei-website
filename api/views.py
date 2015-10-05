@@ -12,6 +12,7 @@ from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 import jwt_helper
 from django.contrib.auth.models import User
+from django.db.models import Q
 
 # Create your views here.
 def business_list(request):
@@ -27,15 +28,17 @@ def business_list(request):
         business = business.filter(tag__name=tag)
 
     start = int(start)
-    business = business[start:start+25]
+    business = business[start:start+30]
     res = [tools.get_business_json(b) for b in business]
     return JsonResponse(res, safe=False)
+
 
 def post_list(request):
     start = request.GET.get('start', None) # required
     business_id = request.GET.get('business_id', None) # optional
     hot_area = request.GET.get('hot_area', None) # optional
     tag = request.GET.get('tag', None) # optional
+    q = request.GET.get('q', None) # optional
 
     post = Post.objects.filter(is_approved=True).order_by('-id')
     if business_id:
@@ -45,9 +48,11 @@ def post_list(request):
         post = post.filter(business__hot_area__name=hot_area)
     if tag:
         post = post.filter(business__tag__name=tag)
+    if q:
+        post = post.filter(Q(business__tag__name__icontains=q) | Q(business__name__icontains=q) | Q(business__name2__icontains=q))
 
     start = int(start)
-    post = post[start:start+25]
+    post = post[start:start+30]
     res = [{
         'id': p.id,
         'title': p.title,

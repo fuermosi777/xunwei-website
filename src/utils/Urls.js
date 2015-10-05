@@ -4,8 +4,8 @@ export default {
     businessList(start, hot_area, tag) {
         return `${urlPrefix}/api/business_list/?start=${start}&hot_area=${hot_area}&tag=${tag}`;
     },
-    postList(start, business_id, hot_area, tag) {
-        return `${urlPrefix}/api/post_list/?start=${start}&business_id=${business_id}&hot_area=${hot_area}&tag=${tag}`;
+    postList(start, business_id, hot_area, tag, q) {
+        return `${urlPrefix}/api/post_list/?start=${start}&business_id=${business_id}&hot_area=${hot_area}&tag=${tag}&q=${q}`;
     },
     business(business_id) {
         return `${urlPrefix}/api/business/?business_id=${business_id}`;

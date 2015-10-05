@@ -80,7 +80,9 @@ export default React.createClass({
         if (location) {
             this.handleLocationSelect(location);
         }
+
         AuthStore.isLogin().then((username) => {
+            console.log(username);
             this.setState({username: username});
         }).catch(() => {});
     },
@@ -117,7 +119,8 @@ export default React.createClass({
                     onTagSelect={this.handleTagSelect}
                     onPostMouseOver={this.handlePostMouseOver}
                     onPostMouseLeave={this.handlePostMouseLeave}
-                    onLoadMoreClick={this.handleMoreMainPost} />
+                    onLoadMoreClick={this.handleMoreMainPost}
+                    onSearch={this.handleSearch} />
                 {this.state.post && this.state.selectedBusiness ? 
                     <PostList 
                         post={this.state.post} 
@@ -189,6 +192,16 @@ export default React.createClass({
                 mainPost: res,
                 loading: false
             });
+        });
+    },
+
+    handleSearch(key) {
+        this.setState({loading: true});
+        ContentService.getPostList(0, '', this.state.location.name, '', key).then((res) => {
+            this.setState({
+                mainPost: res,
+                loading: false
+            })
         });
     },
 

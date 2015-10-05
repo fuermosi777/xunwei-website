@@ -16,13 +16,18 @@
             margin-bottom: 20px;
         }
         .body {
-            p {
+            p,
+            span,
+            div {
                 font-size: 1.4rem;
                 line-height: 1.6;
                 margin-bottom: 10px;
             }
             img {
                 max-width: 100%;
+            }
+            a {
+                color: @color-orange;
             }
         }
     }
@@ -39,6 +44,37 @@
         position: absolute;
         font-size: 30px;
         cursor: pointer;
+    }
+    .meta {
+        background-color: rgba(0, 0, 0, 0.1);
+        padding: 15px;
+        margin-bottom: 20px;
+        p.name {
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+            img {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                vertical-align: middle;
+            }
+        }
+        p.read-source {
+            a {
+                color: @color-orange;
+            }
+        }
+        p.tags {
+            margin-bottom: 10px;
+            .tag {
+                display: inline-block;
+                background: rgba(0, 0, 0, 0.5);
+                padding: 2px 5px;
+                margin-right: 5px;
+                border-radius: 2px;
+                color: white;
+            }
+        }
     }
     a.source {
         display: block;

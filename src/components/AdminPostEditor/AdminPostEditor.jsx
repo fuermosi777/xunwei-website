@@ -72,6 +72,7 @@ export default React.createClass({
         text = text.replace(/[^>]id=".*?"/gi, '');
         text = text.replace(/[^>]width=".*?"/gi, '');
         text = text.replace(/[^>]height=".*?"/gi, '');
+        text = text.replace(/[^>]color=".*?"/gi, '');
 
         var imgSrcRe = /<img.*?src=['|"](.*?)['|"]/g;
         var m;
