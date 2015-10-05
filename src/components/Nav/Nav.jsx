@@ -12,12 +12,17 @@ export default React.createClass({
                 </div>
                 {this.props.location ? 
                 <div className="right"> 
+                    <span onClick={this.handleHomeClick}><i className="ion-android-home"/>首页</span>
                     <span onClick={this.handlePublishClick}><i className="ion-android-create"/>写寻记</span>
                     {this.props.username ? <span onClick={this.handleLogoutClick}><i className="ion-android-exit"/>登出</span> : <span onClick={this.handleAuthClick}><i className="ion-android-happy"/>登录/注册</span>}
                     <span className="location" onClick={this.handleLocationClick}><i className="ion-android-navigate"/>{this.props.location.name}</span>
                 </div> : ''}
             </div>
         );
+    },
+
+    handleHomeClick() {
+        window.location = '/';
     },
 
     handleLocationClick() {

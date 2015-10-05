@@ -10,6 +10,7 @@ def get_business_json(b):
         'city': b.city.name,
         'state': b.city.state.name,
         'postcode': b.postcode.number,
+        'hot_area': b.hot_area.name,
         'tag': [{
             'name': t.name
         } for t in b.tag.all()]

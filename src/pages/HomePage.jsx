@@ -45,44 +45,56 @@ export default React.createClass({
     },
 
     componentWillMount() {
+        
+    },
+
+    componentDidMount() {
         // get category from URL
         // and set to state
         Tracker.trackPageView();
-        if (this.props.history.isActive('/tag')) {
-
-        } else if (this.props.history.isActive('/post')) {
+        if (this.props.history.isActive('/post')) {
             let pid = this.props.params.pid || '';
             if (pid) {
                 this.setState({loading: true});
+                let post;
                 ContentService.getPost(pid).then((res) => {
+                    post = res;
+                    let locationName = res.business.hot_area;
+                    let location = Constant.LOCATIONS.filter((item) => {
+                        return item.name === locationName;
+                    })[0];
+                    return this.handleLocationSelect(location);
+                }).then(() => {
                     this.setState({loading: false});
-                    this.handlePostSelect(res);
+                    this.handlePostSelect(post);
                 });
             }
         } else if (this.props.history.isActive('/business')) {
             let bid = this.props.params.bid || '';
             if (bid) {
                 this.setState({loading: true});
+                let business;
                 ContentService.getBusiness(bid).then((res) => {
+                    business = res;
+                    let locationName = res.hot_area;
+                    let location = Constant.LOCATIONS.filter((item) => {
+                        return item.name === locationName;
+                    })[0];
+                    return this.handleLocationSelect(location);
+                }).then(() => {
                     this.setState({
                         loading: false
                     });
-                    this.handleBusinessSelect(res);
+                    this.handleBusinessSelect(business);
                 });
             }
         } else {
-            
+            let location = LocationStore.getLocation();
+            if (location) {
+                this.handleLocationSelect(location);
+            }
         }
-    },
-
-    componentDidMount() {
-        let location = LocationStore.getLocation();
-        if (location) {
-            this.handleLocationSelect(location);
-        }
-
         AuthStore.isLogin().then((username) => {
-            console.log(username);
             this.setState({username: username});
         }).catch(() => {});
     },
@@ -147,9 +159,9 @@ export default React.createClass({
             location: l,
             center: l.center,
             loading: true,
+            mouseOverBusiness: null,
             selectedPost: null,
-            selectedBusiness: null,
-            mouseOverBusiness: null
+            selectedBusiness: null
         });
         let getPostList = ContentService.getPostList(0, '', l.name, '').then((res) => {
             this.setState({
@@ -198,6 +210,7 @@ export default React.createClass({
     handleSearch(key) {
         this.setState({loading: true});
         ContentService.getPostList(0, '', this.state.location.name, '', key).then((res) => {
+            document.title = `寻味 | 搜索结果: ${key}`;
             this.setState({
                 mainPost: res,
                 loading: false

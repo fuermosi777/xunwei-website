@@ -12,6 +12,7 @@ export default {
             let token = localStorage.getItem('token');
             if (!token) {
                 reject();
+                return;
             }
             AuthService.checkStatus(token).then((res) => {
                 if (res.status) {
