@@ -5,10 +5,6 @@ export default {
         if (typeof GA === 'undefined') return;
         GA('send', 'pageview');
     },
-    trackAreaPageView(area) {
-        if (typeof GA === 'undefined') return;
-        GA('send', 'pageview', '/area/' + area);
-    },
     trackPostPageView(title) {
         if (typeof GA === 'undefined') return;
         GA('send', 'pageview', '/post/' + title);
@@ -21,4 +17,8 @@ export default {
         if (typeof GA === 'undefined') return;
         GA('send', 'pageview', '/tag/' + tag);
     },
+    trackSearchPageView(key) {
+        if (typeof GA === 'undefined') return;
+        GA('send', 'pageview', '/serach/?q=' + key);
+    }
 }

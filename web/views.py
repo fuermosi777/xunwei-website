@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from api.models import *
+from django.db.models import Q
 
 # Create your views here.
 def old(request, restaurant):
@@ -37,16 +38,17 @@ def business(request, business_id):
     }
     return render(request, 'business.html', context)
 
-def area(request, area_name):
-    try:
-        hot_area_instance = Hot_area.objects.get(name=area_name)
-    except:
-        hot_area_instance = None
+def search(request):
+    q = request.GET.get('q', None)
+    if not q:
         return HttpResponseRedirect('/')
+
+    post = Post.objects.filter(Q(business__tag__name__icontains=q) | Q(business__name__icontains=q) | Q(business__name2__icontains=q)).order_by('-id')[:50]
     context = {
-        'hot_area': hot_area_instance
+        'q': q,
+        'post': post,
     }
-    return render(request, 'area.html', context)
+    return render(request, 'search.html', context)
 
 def tag(request, tag_name):
     try:

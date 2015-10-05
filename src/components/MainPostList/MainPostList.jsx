@@ -36,7 +36,7 @@ export default React.createClass({
                 <div className="wrapper">
                     <div className="search-box">
                         {this.state.keyword ? '' : <label>开始搜索: 中餐、火锅、汉堡...</label>}
-                        <input className="keyword-input" type="text" autocomplete="off" onChange={this.handleKeywordChange} onKeyDown={this.handleKeywordKeyDown}/>
+                        <input className="keyword-input" type="text" autoComplete="off" onChange={this.handleKeywordChange} onKeyDown={this.handleKeywordKeyDown}/>
                         <i className="ion-android-search search-button" onClick={this.handleSearch}/>
                     </div>
                     <ul className="tag-list">

@@ -44,10 +44,6 @@ export default React.createClass({
         };
     },
 
-    componentWillMount() {
-        
-    },
-
     componentDidMount() {
         // get category from URL
         // and set to state
@@ -86,6 +82,22 @@ export default React.createClass({
                         loading: false
                     });
                     this.handleBusinessSelect(business);
+                });
+            }
+        } else if (this.props.history.isActive('/tag')) {
+            let tag = this.props.params.tag || '';
+            let location = LocationStore.getLocation() || Constant.LOCATIONS[0];
+            if (tag) {
+                this.handleLocationSelect(location).then(() => {
+                    this.handleTagSelect({name: tag});
+                });
+            }
+        } else if (this.props.history.isActive('/search')) {
+            let q = this.props.location.query.q || '';
+            let location = LocationStore.getLocation() || Constant.LOCATIONS[0];
+            if (q) {
+                this.handleLocationSelect(location).then(() => {
+                    this.handleSearch(q);
                 });
             }
         } else {
@@ -154,28 +166,35 @@ export default React.createClass({
     },
 
     handleLocationSelect(l) {
-        LocationStore.setLocation(l);
-        this.setState({
-            location: l,
-            center: l.center,
-            loading: true,
-            mouseOverBusiness: null,
-            selectedPost: null,
-            selectedBusiness: null
-        });
-        let getPostList = ContentService.getPostList(0, '', l.name, '').then((res) => {
+        return new Promise((resolve, reject) => {
+            LocationStore.setLocation(l);
             this.setState({
-                mainPost: res
+                location: l,
+                center: l.center,
+                loading: true,
+                mouseOverBusiness: null,
+                selectedPost: null,
+                selectedBusiness: null
+            });
+            let getPostList = ContentService.getPostList(0, '', l.name, '').then((res) => {
+                this.setState({
+                    mainPost: res
+                });
+            });
+            let getTagList = ContentService.getTagList().then((res) => {
+                this.setState({tag: res});
+            });
+            Promise.all([getPostList, getTagList]).then((res) => {
+                this.history.pushState(null, `/`);
+                Tracker.trackPageView();
+                document.title = `寻味`;
+                this.setState({
+                    loading: false
+                });
+                resolve();
             });
         });
-        let getTagList = ContentService.getTagList().then((res) => {
-            this.setState({tag: res});
-        });
-        Promise.all([getPostList, getTagList]).then((res) => {
-            this.setState({
-                loading: false
-            });
-        });
+        
     },
 
     handleMoreMainPost() {
@@ -210,7 +229,9 @@ export default React.createClass({
     handleSearch(key) {
         this.setState({loading: true});
         ContentService.getPostList(0, '', this.state.location.name, '', key).then((res) => {
+            this.history.pushState(null, `/search/`, {q: key})
             document.title = `寻味 | 搜索结果: ${key}`;
+            Tracker.trackSearchPageView(key);
             this.setState({
                 mainPost: res,
                 loading: false

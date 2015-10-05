@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block noscript %}
+    <h2>搜索内容: {{ q }}</h2>
+    <h2>搜索结果: </h2>
+    <ul>
+    {% for p in post %}
+        <li><a href="/post/{{ p.id }}/">{{ p.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% endblock %}

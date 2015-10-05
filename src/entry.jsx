@@ -9,10 +9,10 @@ import 'babel-runtime/core-js/promise';
 React.render((
     <Router history={createBrowserHistory()}>
         <Route location="history" path="/" component={HomePage}>
-            <Route name="area" path="/area/:category" component={HomePage} />
-            <Route name="tag" path="/tag/:tag" component={HomePage} />
             <Route name="post" path="/post/:pid" component={HomePage} />
             <Route name="business" path="/business/:bid" component={HomePage} />
+            <Route name="search" path="/search/" component={HomePage} />
+            <Route name="tag" path="/tag/:tag" component={HomePage} />
         </Route>
         <Route name="user" path="/secret/" component={SecretPage} />
     </Router>

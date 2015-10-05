@@ -12,10 +12,8 @@ urlpatterns += patterns('web.views',
     url(r'^post/(?P<post_id>[0-9]+)/$', 'post'),
     url(r'^business/(?P<business_id>[0-9]+)/$', 'business'),
     url(r'^tag/(?P<tag_name>\w+)/$', 'tag'),
-    url(r'^area/(?P<area_name>\w+)/$', 'area'),
-
+    url(r'^search/', 'search'),
     url(r'^restaurant/(?P<restaurant>\w+)/$', 'old'),
-    url(r'^search/', 'old'),
 
     # user
     url(r'^secret/$', TemplateView.as_view(template_name='base.html')),
