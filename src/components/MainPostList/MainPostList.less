@@ -6,9 +6,14 @@
     position: absolute;
     height: 100%;
     background-color: white;
+    @media @xs {
+        width: 100%;
+        left: 0;
+    }
     .wrapper {
         height: 100%;
         overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
         padding-bottom: 50px;
         .search-box {
             padding: 20px 20px 10px;
@@ -68,10 +73,17 @@
                     overflow: hidden;
                     background-size: cover;
                     float: left;
+                    @media @xs {
+                        width: 60px;
+                        height: 60px;
+                    }
                 }
                 .right {
                     padding: 0 10px 10px 100px;
                     line-height: 1.4;
+                    @media @xs {
+                        padding-left: 80px;
+                    }
                     p.title {
                         font-size: 1.4rem;
                         margin-bottom: 5px;

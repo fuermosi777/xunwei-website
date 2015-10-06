@@ -6,11 +6,19 @@
     position: absolute;
     background-color: white;
     height: 100%;
+    @media @xs {
+        width: 100%;
+        left: 0;
+    }
     .wrapper {
         padding: 40px;
         overflow-y: auto;
         height: 100%;
         padding-bottom: 50px;
+        -webkit-overflow-scrolling: touch;
+        @media @xs {
+            padding: 40px 15px 80px;
+        }
         p.title {
             font-size: 2rem;
             margin-bottom: 20px;
@@ -44,6 +52,9 @@
         position: absolute;
         font-size: 30px;
         cursor: pointer;
+        @media @xs {
+            left: 0;
+        }
     }
     .meta {
         background-color: rgba(0, 0, 0, 0.1);
@@ -95,6 +106,7 @@
     }
     .star {
         margin-top: 10px;
+        margin-bottom: 20px;
         line-height: 30px;
         vertical-align: middle;
         color: #999;
@@ -113,6 +125,26 @@
         i {
             font-size: 23px;
             vertical-align: middle;
+        }
+    }
+    .share {
+        margin-bottom: 20px;
+
+        img.social-icon {
+            width: 24px;
+            margin-right: 5px;
+        }
+        .wechat {
+            position: relative;
+            img.qrcode {
+                display: none;
+            }
+            &:hover img.qrcode {
+                position: absolute;
+                bottom: 30px;
+                width: 100px;
+                display: block;
+            }
         }
     }
 }

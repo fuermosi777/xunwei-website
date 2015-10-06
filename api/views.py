@@ -59,7 +59,8 @@ def post_list(request):
         'preview': p.preview,
         'body': p.body,
         'source': p.source,
-        'business': tools.get_business_json(p.business)
+        'business': tools.get_business_json(p.business),
+        'qrcode': tools.url_to_qrcode('http://xun-wei.com/post/%s'%p.id),
     } for p in post]
     return JsonResponse(res, safe=False)
 
@@ -75,7 +76,8 @@ def post(request):
         'preview': post.preview,
         'body': post.body,
         'source': post.source,
-        'business': tools.get_business_json(post.business)
+        'business': tools.get_business_json(post.business),
+        'qrcode': tools.url_to_qrcode('http://xun-wei.com/post/%s'%post.id),
     }
     return JsonResponse(res, safe=False)
 

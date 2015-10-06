@@ -1,8 +1,10 @@
 @import (reference) "../Base/Base";
 .Map {
     width: 60%;
-    min-width: 500px;
     display: inline-block;
+    @media @xs {
+        width: 0;
+    }
     .marker {
         .transition(0.15s);
         &:before {

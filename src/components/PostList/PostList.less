@@ -6,11 +6,16 @@
     left: 60%;
     position: absolute;
     height: 100%;
+    @media @xs {
+        width: 100%;
+        left: 0;
+    }
     .wrapper {
         height: 100%;
         overflow-y: auto;
         background-color: white;
         padding-bottom: 50px;
+        -webkit-overflow-scrolling: touch;
     }
     .info {
         padding: 20px;
@@ -86,5 +91,8 @@
         position: absolute;
         font-size: 30px;
         cursor: pointer;
+        @media @xs {
+            left: 0;
+        }
     }
 }

@@ -1,5 +1,4 @@
 @import (reference) "../Base/Base.less";
-
 .Nav {
     height: 50px;
     background: #201E21;
@@ -29,6 +28,9 @@
         .en {
             color: white;
         }
+        @media @xs {
+            display: none;
+        }
     }
     .right {
         cursor: pointer;
@@ -46,6 +48,12 @@
         span {
             display: inline-block;
             margin: 0 5px;
+        }
+        @media @xs {
+            right: 10px;
+            span {
+                margin: 0 3px;
+            }
         }
     }
 }

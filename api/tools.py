@@ -15,3 +15,13 @@ def get_business_json(b):
             'name': t.name
         } for t in b.tag.all()]
     }
+
+import qrcode
+import base64
+import cStringIO
+def url_to_qrcode(url):
+    img = qrcode.make(url)
+    buffer = cStringIO.StringIO()
+    img.save(buffer)
+    img_str = base64.b64encode(buffer.getvalue())
+    return img_str
