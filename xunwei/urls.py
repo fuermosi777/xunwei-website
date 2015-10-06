@@ -46,3 +46,7 @@ urlpatterns += patterns('api.robot',
     url(r'^robot/post/$', 'post'),
     url(r'^robot/business/$', 'business'),
 )
+
+urlpatterns += patterns('wechat.views',
+    url(r'^wechat/$', 'wechat'),
+)

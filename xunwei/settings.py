@@ -53,6 +53,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'api',
     'web',
+    'wechat',
     'storages',
     'froala_editor',
 )
