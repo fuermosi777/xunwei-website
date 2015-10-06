@@ -195,8 +195,16 @@ def secret_add_post(request):
 
     if None in (token, business_id, source, title, preview, body):
         return HttpResponse(status=500)
-    if token != 'xw1':
+
+    decode = jwt_helper.decode(token)
+    try:
+        user = User.objects.get(username=decode['email'])
+    except:
+        user = None
         return HttpResponse(status=403)
+    if user.id != 256:
+        return HttpResponse(status=403)
+
 
     business = Business.objects.get(id=business_id)
 

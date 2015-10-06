@@ -1,12 +1,13 @@
 import React from 'react';
 import Styles from './AdminPostEditor.less';
 import $ from 'jquery';
+import AuthStore from '../../stores/AuthStore.js';
 
 export default React.createClass({
     getInitialState() {
         return {
             loading: false,
-            token: '',
+            token: AuthStore.getToken(),
             title: '',
             preview: '',
             source: '',
@@ -19,7 +20,6 @@ export default React.createClass({
             <div className="AdminPostEditor">
                 {this.state.loading ? <div className="loading">LOADING</div> : 
                 <div>
-                    <input placeholder="Publish Token" onChange={this.handleInputChange.bind(this, 'token')}/>
                     <input placeholder="Title" onChange={this.handleInputChange.bind(this, 'title')}/>
                     <input placeholder="Source" onChange={this.handleInputChange.bind(this, 'source')}/>
                     <textarea placeholder="Preview" onChange={this.handleInputChange.bind(this, 'preview')}/>
