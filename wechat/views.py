@@ -77,7 +77,7 @@ def wechat(request):
 def check_text(user, msg, context, template):
     # check if feedback
     if msg.startswith('反馈'):
-        fb = Feedback(user=user, content=msg)
+        fb = Feedback(wechat_user=user, content=msg)
         fb.save()
         context['content'] = '您的反馈我们已经收到，谢谢！'
         return context
