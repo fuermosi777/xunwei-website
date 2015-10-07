@@ -11,13 +11,15 @@ def wechat(request):
     content = ''
 
     root = ET.fromstring(request.body)    
-
     msg_type = root.find('MsgType').text
     from_user = root.find('FromUserName').text
     if msg_type == 'text':
+        msg = root.find('Content').text
         content = '你好'
+        if '漂亮' in msg:
+            content = '张梦晗'
     else:
-        content = '很抱歉，寻味目前还不支持这种格式'
+        content = '很抱歉，寻味目前还不支持这种格式。'
     
     context = {
         'to': from_user,
