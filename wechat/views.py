@@ -62,6 +62,11 @@ def wechat(request):
         else:
             context['content'] = '寻味在您附近没找到靠谱的餐馆...'
 
+    elif msg_type == 'event':
+        event = msg_type = root.find('Event').text
+        if event == 'subscribe':
+            context['content'] = '欢迎关注寻味！您可以发送您所在的地区（纽约或湾区）、邮编、或者直接点击加号发送您的位置给我们。我们会帮你找到最新鲜、丰富的美食信息！'
+
     # not support yet
     else:
         context['content'] = '很抱歉，寻味目前还不支持这种格式。'
@@ -117,5 +122,5 @@ def check_text(user, msg, context, template):
         template = 'news.xml'
         return (context, template)
     # fallback
-    context['content'] = '很抱歉，找不到任何关于“%s“的内容。请输入地区、菜色或者邮编给寻味，我们会帮你找到最新鲜、丰富的美食信息！'%msg
+    context['content'] = '很抱歉，找不到任何关于“%s“的内容。请输入地区、菜色或者邮编给寻味，或者直接点击加号发送您的位置给我们。我们会帮你找到最新鲜、丰富的美食信息！'%msg
     return (context, template)
