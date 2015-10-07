@@ -48,6 +48,19 @@ def wechat(request):
         msg = root.find('Content').text.encode('utf-8')
         context, template = check_text(user, msg, context, template)
 
+    elif msg_type == 'location':
+        lat = root.find('Location_X').text
+        lng = root.find('Location_Y').text
+        try:
+            post = Post.objects.filter(business__latitude<lat+0.01, business__latitude<lat>0.01, business__longitude<lng+0.01, business__longitude>lng-0.01)
+        except:
+            post = None
+        if post:
+            context['post'] = post
+            template = 'news.xml'
+        else:
+            context['content'] = '寻味在您附近没找到靠谱的餐馆...'
+
     # not support yet
     else:
         context['content'] = '很抱歉，寻味目前还不支持这种格式。'
