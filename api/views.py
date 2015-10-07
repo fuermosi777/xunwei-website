@@ -78,7 +78,7 @@ def post(request):
         'title': post.title,
         'preview': post.preview,
         'body': post.body,
-        'date': p.datetime.strftime('%Y年%M月%d日'),
+        'date': post.datetime.strftime('%Y年%M月%d日'),
         'source': post.source,
         'business': tools.get_business_json(post.business),
         'qrcode': tools.url_to_qrcode('http://xun-wei.com/post/%s'%post.id),
