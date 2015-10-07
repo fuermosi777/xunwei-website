@@ -49,10 +49,9 @@ def wechat(request):
         context, template = check_text(user, msg, context, template)
 
     elif msg_type == 'location':
-        lat = root.find('Location_X').text
-        lng = root.find('Location_Y').text
+        lat = float(root.find('Location_X').text)
+        lng = float(root.find('Location_Y').text)
         s = 0.01
-        print lat, lng
         try:
             post = Post.objects.filter(is_approved=True, business__latitude__lt=lat+0.01, business__latitude__gt=lat-0.01, business__longitude__lt=lng+0.01, business__longitude__gt=lng-0.01).order_by('?')[:5]
         except:
