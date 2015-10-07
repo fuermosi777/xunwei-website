@@ -70,7 +70,7 @@ def check_text(user, msg, context, template):
         msg = int(msg)
     except:
         pass
-    if isinstance(msg, int) and len(msg) == 5:
+    if isinstance(msg, int) and len(str(msg)) == 5:
         try:
             post = Post.objects.filter(is_approved=True, business__postcode__number=msg)
         except:
