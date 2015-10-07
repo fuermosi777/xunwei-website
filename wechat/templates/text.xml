@@ -1,9 +1,9 @@
 <xml>
     <ToUserName>
-        <![CDATA[toUser]]>
+        <![CDATA[{{ to }}]]>
     </ToUserName>
     <FromUserName>
-        <![CDATA[fromUser]]>
+        <![CDATA[xunwei_nyc]]>
     </FromUserName>
     <CreateTime>12345678</CreateTime>
     <MsgType>
