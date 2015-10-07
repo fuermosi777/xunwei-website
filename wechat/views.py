@@ -47,7 +47,7 @@ def wechat(request):
                 user.save()
                 content = '您想吃点什么？（中餐/火锅/烧烤/日料/川菜...）'
         else:
-            post = Post.objects.filter(is_approved=True, hot_area=user.hot_area).filter(Q(title__icontains=msg) | Q(business__tag__name__icontains=msg) | Q(business__name__icontains=msg) | Q(business__name2__icontains=msg)).order_by('?')[:5]
+            post = Post.objects.filter(is_approved=True, business__hot_area=user.hot_area).filter(Q(title__icontains=msg) | Q(business__tag__name__icontains=msg) | Q(business__name__icontains=msg) | Q(business__name2__icontains=msg)).order_by('?')[:5]
             if post:
                 template = 'news.xml'
             else:
