@@ -8,10 +8,19 @@ import xml.etree.ElementTree as ET
 
 @csrf_exempt
 def wechat(request):
-    root = ET.fromstring(request.body)
+    content = ''
+
+    root = ET.fromstring(request.body)    
+
+    msg_type = root.find('MsgType').text
     from_user = root.find('FromUserName').text
+    if msg_type == 'text':
+        content = '你好'
+    else:
+        content = '很抱歉，寻味目前还不支持这种格式'
+    
     context = {
         'to': from_user,
-        'content': '你好'
+        'content': content,
     }
     return render(request, 'text.xml', context, content_type="application/xhtml+xml")
