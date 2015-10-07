@@ -46,7 +46,7 @@ def wechat(request):
     if msg_type == 'text':
         # get text message
         msg = root.find('Content').text.encode('utf-8')
-        context = check_text(user, msg, context, template)
+        context, template = check_text(user, msg, context, template)
 
     # not support yet
     else:
@@ -64,7 +64,7 @@ def check_text(user, msg, context, template):
         user.hot_area = hot_area
         user.save()
         context['content'] = '您想吃点什么？（川菜、火锅、烧烤、米其林...）'
-        return context
+        return (context, template)
     # check postcode
     try:
         msg = int(msg)
@@ -80,11 +80,11 @@ def check_text(user, msg, context, template):
             template = 'news.xml'
         else:
             context['content'] = '很抱歉，找不到位于邮编%s的餐馆'%msg
-        return context
+        return (context, template)
     # check if user has a location selected
     if not user.hot_area:
         context['content'] = '你想看哪里美食信息？（目前寻味支持纽约和湾区，其他北美地区敬请期待! ^_^）'
-        return context
+        return (context, template)
     # check if tag
     try:
         post = Post.objects.filter(is_approved=True, business__hot_area=user.hot_area).filter(
@@ -101,7 +101,7 @@ def check_text(user, msg, context, template):
     if post:
         context['post'] = post
         template = 'news.xml'
-        return context
+        return (context, template)
     # fallback
     context['content'] = '很抱歉，找不到任何关于“%s“的内容。请输入地区、菜色或者邮编给寻味，我们会帮你找到最新鲜、丰富的美食信息！'%msg
-    return context
+    return (context, template)
