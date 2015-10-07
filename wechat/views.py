@@ -46,6 +46,7 @@ def wechat(request):
     if msg_type == 'text':
         # get text message
         msg = root.find('Content').text.encode('utf-8')
+
         context, template = check_text(user, msg, context, template)
 
     elif msg_type == 'location':
@@ -74,6 +75,12 @@ def wechat(request):
     return render(request, template, context, content_type="application/xhtml+xml")
 
 def check_text(user, msg, context, template):
+    # check if feedback
+    if msg.startswith('反馈'):
+        fb = Feedback(user=user, content=msg)
+        fb.save()
+        context['content'] = '您的反馈我们已经收到，谢谢！'
+        return context
     # check hot_area
     try:
         hot_area = Hot_area.objects.get(Q(name__icontains=msg) | Q(other_name__icontains=msg))
