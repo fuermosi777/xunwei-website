@@ -80,7 +80,7 @@ def check_text(user, msg, context, template):
         fb = Feedback(wechat_user=user, content=msg)
         fb.save()
         context['content'] = '您的反馈我们已经收到，谢谢！'
-        return context
+        return (context, template)
     # check hot_area
     try:
         hot_area = Hot_area.objects.get(Q(name__icontains=msg) | Q(other_name__icontains=msg))
