@@ -9,6 +9,7 @@ import Nav from '../components/Nav/Nav.jsx';
 import Loading from '../components/Loading/Loading.jsx';
 import PostEditor from '../components/PostEditor/PostEditor.jsx';
 import Post from '../components/Post/Post.jsx';
+import WechatIcon from '../components/WechatIcon/WechatIcon.jsx';
 import Constant from '../utils/Constant.js';
 import Tracker from '../utils/Tracker.js';
 
@@ -155,12 +156,14 @@ export default React.createClass({
                     <Post 
                         data={this.state.selectedPost} 
                         onCloseClick={this.handlePostClose} 
-                        onStarFail={this.handleAuthStart}/> : ''}
+                        onStarFail={this.handleAuthStart}
+                        onBusinessSelect={this.handleBusinessSelect}/> : ''}
                 {this.state.loading ? 
                     <Loading/> : ''}
                 {this.state.showPostEditor ? 
                     <PostEditor
                         onPublishSuccess={this.handlePublishSuccess}/> : ''}
+                <WechatIcon/>
             </div>
         );
     },

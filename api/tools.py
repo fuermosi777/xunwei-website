@@ -5,6 +5,7 @@ def get_business_json(b):
         'name2': b.name2,
         'lat': b.latitude,
         'lng': b.longitude,
+        'phone': b.phone,
         'photo': b.photo.url,
         'street': b.street1,
         'city': b.city.name,

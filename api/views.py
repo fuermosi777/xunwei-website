@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from api.models import *
@@ -58,6 +60,7 @@ def post_list(request):
         'title': p.title,
         'preview': p.preview,
         'body': p.body,
+        'date': p.datetime.strftime('%Y年%M月%d日'),
         'source': p.source,
         'business': tools.get_business_json(p.business),
         'qrcode': tools.url_to_qrcode('http://xun-wei.com/post/%s'%p.id),
@@ -75,6 +78,7 @@ def post(request):
         'title': post.title,
         'preview': post.preview,
         'body': post.body,
+        'date': p.datetime.strftime('%Y年%M月%d日'),
         'source': post.source,
         'business': tools.get_business_json(post.business),
         'qrcode': tools.url_to_qrcode('http://xun-wei.com/post/%s'%post.id),

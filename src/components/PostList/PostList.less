@@ -5,12 +5,12 @@
     left: 60%;
     position: absolute;
     height: 100%;
-    animation: 0.2s slideLeft;
+    animation: 0.2s slideL;
     @media @xs {
         width: 100%;
         left: 0;
     }
-    @keyframes slideLeft {
+    @keyframes slideL {
         0% {
             left: 100%;
         }
@@ -52,10 +52,13 @@
         p.name {
             font-size: 1.6rem;
             color: @color-orange;
+            margin-bottom: 10px;
         }
+        p.phone,
         p.location {
             font-size: 1.3rem;
             color: #848484;
+            margin-bottom: 5px;
         }
     }
     ul.post-list {
@@ -69,12 +72,17 @@
     }
     .title {
         color: #555961;
-        font-size: 1.4rem;
+        font-size: 1.6rem;
         font-weight: bold;
         margin-bottom: 10px;
     }
-    .preview {
+    .date {
+        color: rgba(0, 0, 0, 0.5);
+        margin-bottom: 10px;
         font-size: 1.2rem;
+    }
+    .preview {
+        font-size: 1.4rem;
     }
     .body {
         p {

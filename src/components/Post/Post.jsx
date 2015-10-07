@@ -20,7 +20,7 @@ export default React.createClass({
             <div className="Post">
                 <div className="wrapper">
                     <p className="title">{this.props.data.title}</p>
-                    <div className="meta">
+                    <div className="meta" onClick={this.handleBusinessClick}>
                         <p className="name"><img src={this.props.data.business.photo}/>{` ${this.props.data.business.name} ${this.props.data.business.name2}`}</p>
                         <p className="tags">
                         {this.props.data.business.tag.map((item, i) => {
@@ -46,6 +46,10 @@ export default React.createClass({
                 <span className="close" onClick={this.handleCloseClick}><i className="ion-android-close"></i></span>
             </div>
         );
+    },
+
+    handleBusinessClick() {
+        this.props.onBusinessSelect(this.props.data.business);
     },
 
     handleCloseClick() {

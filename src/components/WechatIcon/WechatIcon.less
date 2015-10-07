@@ -1,0 +1,30 @@
+@import (reference) "../Base/Base";
+.WechatIcon {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    width: 62px * 0.4;
+    height: 52px * 0.4;
+    display: block;
+    background-image: url(wechat_gray.png);
+    cursor: pointer;
+    background-size: cover;
+    z-index: 9000;
+    &:hover {
+        background-image: url(wechat.png);
+        .qr {
+            display: block;
+        }
+    }
+
+    .qr {
+        background-image: url(qr.jpg);
+        width: 100px;
+        height: 100px;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        display: none;
+        background-size: cover;
+    }
+}
