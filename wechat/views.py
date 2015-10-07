@@ -14,10 +14,10 @@ def wechat(request):
     msg_type = root.find('MsgType').text
     from_user = root.find('FromUserName').text
     if msg_type == 'text':
-        msg = root.find('Content').text
+        msg = root.find('Content').text.encode('utf-8')
         content = '你好'
         if '漂亮' in msg:
-            content = '张梦晗'
+            content = '我家宝宝'
     else:
         content = '很抱歉，寻味目前还不支持这种格式。'
     
