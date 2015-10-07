@@ -23,7 +23,7 @@ def wechat(request):
 
         # get or create a new user
         try:
-            user = Wechat_user.get(wechat_user=from_user)
+            user = Wechat_user.objects.get(wechat_user=from_user)
         except:
             user = Wechat_user(wechat_user=from_user)
             user.save()
@@ -48,7 +48,10 @@ def wechat(request):
                 content = '您想吃点什么？（中餐/火锅/烧烤/日料/川菜...）'
         else:
             post = Post.objects.filter(is_approved=True, hot_area=user.hot_area).filter(Q(title__icontains=msg) | Q(business__tag__name__icontains=msg) | Q(business__name__icontains=msg) | Q(business__name2__icontains=msg)).order_by('?')[:5]
-            template = 'news.xml'
+            if post:
+                template = 'news.xml'
+            else:
+                content = '很抱歉，找不到任何关于“%s”的内容'%msg
 
 
     # not support yet

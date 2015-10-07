@@ -3,7 +3,7 @@ from api.models import *
 
 # Create your models here.
 class Wechat_user(models.Model):
-    wechat_user = models.CharField(max_length=28)
+    wechat_user = models.CharField(max_length=28, unique=True)
     hot_area = models.ForeignKey(Hot_area, blank=True, null=True)
 
     def __unicode__(self):
