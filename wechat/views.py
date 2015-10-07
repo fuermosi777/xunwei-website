@@ -27,13 +27,13 @@ def wechat(request):
 
         # create a new session or get an existing one
         try:
-            session = Session.objects.filter(wechat_user=user).latest()
+            session = Wechat_session.objects.filter(wechat_user=user).latest()
             diff = datetime.now() - session.datetime
             if diff.minutes > 10:
                 session = None
-                session = Session(wechat_user=user)
+                session = Wechat_session(wechat_user=user)
         except:
-            session = Session(wechat_user=user)
+            session = Wechat_session(wechat_user=user)
         # save session or refresh session 
         session.save()
 
