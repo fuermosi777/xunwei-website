@@ -9,7 +9,7 @@
     <MsgType>
         <![CDATA[news]]>
     </MsgType>
-    <ArticleCount>2</ArticleCount>
+    <ArticleCount>{{ post|length }}</ArticleCount>
     <Articles>
         {% for p in post %}
         <item>
