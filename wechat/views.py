@@ -56,7 +56,10 @@ def wechat(request):
 
 def check_text(user, msg, context, template):
     # check hot_area
-    hot_area = Hot_area.objects.get(Q(name__icontains=msg) | Q(other_name__icontains=msg))
+    try:
+        hot_area = Hot_area.objects.get(Q(name__icontains=msg) | Q(other_name__icontains=msg))
+    except:
+        hot_area = None
     if hot_area:
         user.hot_area = hot_area
         user.save()
@@ -68,7 +71,10 @@ def check_text(user, msg, context, template):
     except:
         pass
     if isinstance(msg, int) and len(msg) == 5:
-        post = Post.objects.filter(is_approved=True, business__postcode__number=msg)
+        try:
+            post = Post.objects.filter(is_approved=True, business__postcode__number=msg)
+        except:
+            post = None
         if post:
             context['post'] = post
             template = 'news.xml'
@@ -80,19 +86,22 @@ def check_text(user, msg, context, template):
         context['content'] = '你想看哪里美食信息？（目前寻味支持纽约和湾区，其他北美地区敬请期待! ^_^）'
         return context
     # check if tag
-    post = Post.objects.filter(is_approved=True, business__hot_area=user.hot_area).filter(
-            Q(title__icontains=msg) | 
-            Q(business__tag__other_name__icontains=msg) |
-            Q(business__tag__name__icontains=msg) | 
-            Q(business__city__name__icontains=msg) |
-            Q(business__city__other_name__icontains=msg) |
-            Q(business__name__icontains=msg) | 
-            Q(business__name2__icontains=msg)
-        ).order_by('?')[:5]
-        if post:
-            context['post'] = post
-            template = 'news.xml'
-            return context
+    try:
+        post = Post.objects.filter(is_approved=True, business__hot_area=user.hot_area).filter(
+                    Q(title__icontains=msg) | 
+                    Q(business__tag__other_name__icontains=msg) |
+                    Q(business__tag__name__icontains=msg) | 
+                    Q(business__city__name__icontains=msg) |
+                    Q(business__city__other_name__icontains=msg) |
+                    Q(business__name__icontains=msg) | 
+                    Q(business__name2__icontains=msg)
+                ).order_by('?')[:5]
+    except:
+        post = None
+    if post:
+        context['post'] = post
+        template = 'news.xml'
+        return context
     # fallback
     context['content'] = '很抱歉，找不到任何关于“%s“的内容。请输入地区、菜色或者邮编给寻味，我们会帮你找到最新鲜、丰富的美食信息！'%msg
     return context
