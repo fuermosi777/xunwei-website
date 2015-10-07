@@ -65,7 +65,7 @@ def wechat(request):
     elif msg_type == 'event':
         event = msg_type = root.find('Event').text
         if event == 'subscribe':
-            context['content'] = '欢迎关注寻味！您可以发送您所在的地区（纽约或湾区）、邮编、或者直接点击加号发送您的位置给我们。我们会帮你找到最新鲜、丰富的美食信息！'
+            context['content'] = '欢迎关注寻味！您可以发送您所在的地区（纽约或湾区）、邮编、或者直接点击加号发送您的位置给我们。我们会帮你找到最新鲜、丰富的美食信息！您可以直接浏览我们的网站http://xun-wei.com'
 
     # not support yet
     else:
