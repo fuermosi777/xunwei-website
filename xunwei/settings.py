@@ -8,10 +8,14 @@ from secret import *
 try:
     import local
     DEBUG = True
-    CACHE_BACKEND = 'dummy:///?timeout=5'
 except:
     DEBUG = False
-    CACHE_BACKEND = 'memcached://127.0.0.1:18403/?timeout=1800'
+    CACHES = {
+        'default': {
+            'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+            'LOCATION': 'unix:/home/fuermosi777/memcached.sock',
+        }
+    }
 
 ALLOWED_HOSTS = [
     '.webfactional.com',
@@ -60,8 +64,6 @@ INSTALLED_APPS = (
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.cache.UpdateCacheMiddleware',
-    #
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -70,8 +72,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #
-    'django.middleware.cache.FetchFromCacheMiddleware',
 )
 
 CORS_ORIGIN_ALLOW_ALL = True

@@ -8,7 +8,7 @@ def old(request, restaurant):
     return HttpResponseRedirect('/')
 
 def home(request):
-    post = Post.objects.all().order_by('-id')[:100]
+    post = Post.objects.all().order_by('-id')[:30]
     context = {
         'post': post,
     }
