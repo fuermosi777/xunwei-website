@@ -1,6 +1,6 @@
 This is the repo for [http://xun-wei.com](http://xun-wei.com).
 
-Access info of Database, AWS keys, and other relavant stuff should be kept in `secret.py`, which is ignored in `git`.
+Access info of Database, AWS keys, and other relevant stuff should be kept in `secret.py`, which is ignored in `git`.
 
 To start:
 
