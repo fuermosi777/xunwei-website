@@ -55,7 +55,7 @@ def business(request):
     page = urllib2.urlopen(url).read()
     soup = BS(page)
 
-    name = soup.find('h1', {'class': 'biz-page-title'}).get_text().lstrip()
+    name = soup.find('h1', {'class': 'biz-page-title'}).get_text().lstrip().rstrip()
     phone = soup.find('span', {'class': 'biz-phone'}).get_text()
     phone = ''.join([s for s in phone if s.isdigit()])
     street1 = soup.find('span', {'itemprop': 'streetAddress'}).get_text()
