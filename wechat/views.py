@@ -138,5 +138,5 @@ def check_text(user, msg, context, template):
         template = 'post.xml'
         return (context, template)
     # fallback
-    context['content'] = '很抱歉，在%s找不到任何关于“%s“的内容。换个地区？或者换个菜色？亦或者直接点击加号发送您的位置给我们。我们会帮你找到最新鲜、丰富的美食信息！'%(user.hot_area.name, msg)
+    context['content'] = '很抱歉，我在%s找不到任何关于“%s“的内容。换个地区？或者换个菜色？亦或者直接点击加号发送您的位置给我。我会帮你找到最新鲜、丰富的美食信息！'%(user.hot_area.name.encode('utf-8'), msg)
     return (context, template)
