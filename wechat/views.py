@@ -83,7 +83,7 @@ def check_text(user, msg, context, template):
         return (context, template)
     # check if a specific business
     try:
-        business = Business.objects.filter(Q(name__icontains=msg) | Q(name2__icontains=msg)).order_by('?')[:5]
+        business = Business.objects.filter(Q(name=msg) | Q(name2=msg)).order_by('?')[:5]
     except:
         business = None
     if business:
