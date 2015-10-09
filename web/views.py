@@ -20,6 +20,8 @@ def post(request, post_id):
     except:
         post_instance = None
         return HttpResponseRedirect('/')
+    if post_instance.source:
+        return HttpResponseRedirect(post_instance.source)
     context = {
         'post': post_instance
     }

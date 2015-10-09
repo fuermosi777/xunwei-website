@@ -15,12 +15,17 @@ export default React.createClass({
     },
 
     render() {
+        var title = this.state.title;
         return (
             <div className="PostEditor">
-                {this.state.loading ? <div className="loading">LOADING</div> : 
-                <div>
+                {this.state.loading ? 
+                <div className="loading">
+                    <img src={require('./oval.svg')}/>
+                </div>
+                 : ''}
+                <div className="wrapper">
                     {this.state.error ? <p>{this.state.error}</p> : ''}
-                    <input placeholder="输入文章标题" onChange={this.handleInputChange.bind(this, 'title')} className="title-input"/>
+                    <input placeholder="输入文章标题" onChange={this.handleInputChange.bind(this, 'title')} value={title} className="title-input"/>
                     <input type="file" className="image-upload-input" ref="imageUploadInput" onChange={this.handleImageInputChange}/> 
                     <button onClick={this.handleAddImageClick}><i className="ion-android-image"/> 添加图片</button>
                     <div className="textarea" contentEditable="true" onPaste={this.handlePaste} onChanage={this.handleTextareaChange} ref="textarea"></div>

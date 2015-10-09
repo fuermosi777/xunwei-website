@@ -8,14 +8,29 @@
     top: 0;
     left: 0;
     background-color: white;
+    @media @xs {
+        padding: 60px 20px;
+    }
+    .wrapper {
+        width: 500px;
+        margin: 0 auto;
+        @media @xs {
+            width: 100%;
+        }
+    }
     .loading {
         position: fixed;
         top: 0;
         left: 0;
         width: 100vw;
         height: 100vh;
-        background-color: black;
-        color: white;
+        background-color: rgba(0, 0, 0, 0.7);
+        text-align: center;
+        img {
+            position: absolute;
+            top: 50%;
+            .transformTranslateY(-50%);
+        }
     }
     input,
     textarea {
@@ -32,9 +47,14 @@
         width: 100%;
         height: 300px;
         overflow-y: auto;
-        border: none;
+        border: 1px solid #CDCDCD;
         outline: none;
         resize: vertical;
+        padding: 10px;
+        border-radius: 2px;
+        img {
+            max-width: 300px;
+        }
     }
     .image-upload-input {
         display: none;

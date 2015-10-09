@@ -6,7 +6,7 @@ export default React.createClass({
         let List = this.props.post.map((item, i) => {
             return (
                 <li key={i} onClick={this.handlePostClick.bind(this, item)}>
-                    <p className="title"><i className="ion-android-create"/> {item.title}</p>
+                    <p className="title">{item.title}</p>
                     <p className="date"><i className="ion-android-calendar"/> {item.date}</p>
                     <div className="preview">{item.preview}...</div>
                 </li>
@@ -35,7 +35,11 @@ export default React.createClass({
     },
 
     handlePostClick(post) {
-        this.props.onPostSelect(post);
+        if (post.source) {
+            window.open(post.source, '_blank');
+        } else {
+            this.props.onPostSelect(post);
+        }
     },
 
     handleCloseClick() {

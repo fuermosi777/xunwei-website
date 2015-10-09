@@ -30,7 +30,7 @@ def business_list(request):
         business = business.filter(tag__name=tag)
 
     start = int(start)
-    business = business[start:start+30]
+    business = business[start:start+50]
     res = [tools.get_business_json(b) for b in business]
     return JsonResponse(res, safe=False)
 
@@ -54,7 +54,7 @@ def post_list(request):
         post = post.filter(Q(business__tag__name__icontains=q) | Q(business__name__icontains=q) | Q(business__name2__icontains=q))
 
     start = int(start)
-    post = post[start:start+30]
+    post = post[start:start+50]
     res = [{
         'id': p.id,
         'title': p.title,

@@ -67,7 +67,11 @@ export default React.createClass({
     },
 
     handlePostClick(post) {
-        this.props.onPostSelect(post);
+        if (post.source) {
+            window.open(post.source, '_blank');
+        } else {
+            this.props.onPostSelect(post);
+        }
     },
 
     handleBusinessClick(business) {
