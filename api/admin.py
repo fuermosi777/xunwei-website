@@ -2,7 +2,8 @@ from django.contrib import admin
 from api.models import *
 
 class BusinessAdmin(admin.ModelAdmin):
-    list_filter = ('name', 'name2')
+    list_display = ('name', 'name2',)
+    list_filter = ('city', 'postcode', 'hot_area',)
     search_fields = ['name']
 
 # Register your models here.
