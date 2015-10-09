@@ -59,7 +59,7 @@ def wechat(request):
             post = None
         if post:
             context['post'] = post
-            template = 'news.xml'
+            template = 'post.xml'
         else:
             context['content'] = '寻味在您附近没找到靠谱的餐馆...'
 
@@ -80,6 +80,15 @@ def check_text(user, msg, context, template):
         fb = Feedback(wechat_user=user, content=msg)
         fb.save()
         context['content'] = '您的反馈我们已经收到，谢谢！'
+        return (context, template)
+    # check if a specific business
+    try:
+        business = Business.objects.filter(Q(name__icontains=msg) | Q(name2__icontains=msg)).order_by('?')[:5]
+    except:
+        business = None
+    if business:
+        context['business'] = business
+        template = 'business.xml'
         return (context, template)
     # check hot_area
     try:
@@ -103,7 +112,7 @@ def check_text(user, msg, context, template):
             post = None
         if post:
             context['post'] = post
-            template = 'news.xml'
+            template = 'post.xml'
         else:
             context['content'] = '很抱歉，找不到位于邮编%s的餐馆'%msg
         return (context, template)
@@ -126,7 +135,7 @@ def check_text(user, msg, context, template):
         post = None
     if post:
         context['post'] = post
-        template = 'news.xml'
+        template = 'post.xml'
         return (context, template)
     # fallback
     context['content'] = '很抱歉，找不到任何关于“%s“的内容。请输入地区、菜色或者邮编给寻味，或者直接点击加号发送您的位置给我们。我们会帮你找到最新鲜、丰富的美食信息！'%msg

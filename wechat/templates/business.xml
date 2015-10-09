@@ -1,0 +1,31 @@
+<xml>
+    <ToUserName>
+        <![CDATA[{{ to }}]]>
+    </ToUserName>
+    <FromUserName>
+        <![CDATA[xunwei_nyc]]>
+    </FromUserName>
+    <CreateTime>12345678</CreateTime>
+    <MsgType>
+        <![CDATA[news]]>
+    </MsgType>
+    <ArticleCount>{{ business|length }}</ArticleCount>
+    <Articles>
+        {% for b in business %}
+        <item>
+            <Title>
+                <![CDATA[{{ b.name }} {{ b.name2 }}]]>
+            </Title>
+            <Description>
+                <![CDATA[{{ b.street1 }} {{ b.city.name }}, {{ b.state.name }} {{ b.postcode.number }}]]>
+            </Description>
+            <PicUrl>
+                <![CDATA[{{ b.photo.url }}]]>
+            </PicUrl>
+            <Url>
+                <![CDATA[http://xun-wei.com/business/{{ b.id }}/]]>
+            </Url>
+        </item>
+        {% endfor %}
+    </Articles>
+</xml>
