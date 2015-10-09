@@ -2,7 +2,6 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from api.models import *
 from django.views.decorators.csrf import csrf_exempt
-import readability
 from bs4 import BeautifulSoup as BS
 import urllib2
 from urlparse import urlparse, parse_qsl
@@ -11,30 +10,29 @@ import mimetypes
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 
-# Create your views here.
 @csrf_exempt
 def post(request):
     if request.method != 'POST':
         return HttpResponse(status=403)
     business_id = request.POST.get('business_id', None)
     url = request.POST.get('url', None)
+    title = request.POST.get('title', None)
     preview = request.POST.get('preview', None)
 
-    if not business_id or not url or not preview:
+    if None in (business_id, url, title, preview):
         return HttpResponse(status=500)
 
     business = Business.objects.get(id=business_id)
 
-    post_data = readability.read_from_url(url)
-
     post = Post(
-        title=post_data['title'],
+        title=title,
         preview=preview,
-        body=post_data['content'],
+        body=' ',
         source=url,
         business=business,
         is_approved=True,
-        )
+    )
+
     post.save()
     try:
         post.save()
