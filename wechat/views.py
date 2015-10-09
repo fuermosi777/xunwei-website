@@ -8,6 +8,7 @@ import xml.etree.ElementTree as ET
 from wechat.models import *
 from datetime import datetime
 from django.db.models import Q
+import random
 
 @csrf_exempt
 def wechat(request):
@@ -54,7 +55,7 @@ def wechat(request):
         lng = float(root.find('Location_Y').text)
         s = 0.01
         try:
-            post = Post.objects.filter(is_approved=True, business__latitude__lt=lat+0.01, business__latitude__gt=lat-0.01, business__longitude__lt=lng+0.01, business__longitude__gt=lng-0.01).order_by('?')[:5]
+            post = Post.objects.filter(is_approved=True, business__latitude__lt=lat+0.01, business__latitude__gt=lat-0.01, business__longitude__lt=lng+0.01, business__longitude__gt=lng-0.01).order_by('?')[:7]
         except:
             post = None
         if post:
@@ -83,7 +84,7 @@ def check_text(user, msg, context, template):
         return (context, template)
     # check if a specific business
     try:
-        business = Business.objects.filter(Q(name__iexact=msg) | Q(name2__iexact=msg)).order_by('?')[:5]
+        business = Business.objects.filter(Q(name__iexact=msg) | Q(name2__iexact=msg)).order_by('-id').distinct()[:7]
     except:
         business = None
     if business:
@@ -130,7 +131,7 @@ def check_text(user, msg, context, template):
                     Q(business__city__other_name__icontains=msg) |
                     Q(business__name__icontains=msg) | 
                     Q(business__name2__icontains=msg)
-                ).distinct('title').order_by('?')[:5]
+                ).order_by('-id').distinct()[:7]
     except:
         post = None
     if post:
