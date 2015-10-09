@@ -130,7 +130,7 @@ def check_text(user, msg, context, template):
                     Q(business__city__other_name__icontains=msg) |
                     Q(business__name__icontains=msg) | 
                     Q(business__name2__icontains=msg)
-                ).order_by('?')[:5]
+                ).distinct().order_by('?')[:5]
     except:
         post = None
     if post:
