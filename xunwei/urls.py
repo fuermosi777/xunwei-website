@@ -9,6 +9,7 @@ urlpatterns = patterns('',
 
 urlpatterns += patterns('web.views',
     url(r'^$', 'home'),
+    url(r'^i/(?P<post_id>[0-9]+)/$', 'post'),
     url(r'^post/(?P<post_id>[0-9]+)/$', 'post'),
     url(r'^business/(?P<business_id>[0-9]+)/$', 'business'),
     url(r'^tag/(?P<tag_name>\w+)/$', 'tag'),

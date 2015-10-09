@@ -1,14 +1,18 @@
 @import (reference) "../Base/Base.less";
 .MainPostList {
-    width: 40%;
+    width: 50%;
     display: inline-block;
-    left: 60%;
+    left: 50%;
     position: absolute;
     height: 100%;
     background-color: white;
     @media @xs {
         width: 100%;
         left: 0;
+    }
+    @media @sm {
+        width: 40%;
+        left: 60%;
     }
     .wrapper {
         height: 100%;
