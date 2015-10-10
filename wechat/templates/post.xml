@@ -23,7 +23,7 @@
                 <![CDATA[{{ p.business.photo.url }}]]>
             </PicUrl>
             <Url>
-                <![CDATA[http://xun-wei.com/post/{{ p.id }}/]]>
+                <![CDATA[http://xun-wei.com/i/{{ p.id }}/]]>
             </Url>
         </item>
         {% endfor %}

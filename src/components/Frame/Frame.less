@@ -1,37 +1,46 @@
 @import (reference) "../Base/Base.less";
 .Frame {
+    position: relative;
     height: 100%;
-    .frame {
-        position: relative;
+    &.scroll {
         height: 100%;
-        .banner {
-            position: absolute;
-            height: 44px;
-            width: 100%;
-            bottom: 0;
-            left: 0;
-            background-color: rgba(255, 255, 255, 0.85);
-        }
-        button.read {
-            background-color: @color-orange;
-            border: none;
-            border-radius: 2px;
-            position: absolute;
-            width: 64px;
-            height: 24px;
-            top: 8px;
-            right: 15px;
-            cursor: pointer;
-            color: white;
-            font-size: 1.2rem;
-        }
+        overflow: auto;
+    }
+    .frame {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        top: 0;
+        -webkit-overflow-scrolling: touch;
+        overflow: scroll;
     }
     iframe {
-        width: 100%;
+        width: 1px;
+  min-width: 100%;
         height: 100%;
-        overflow: hidden;
-        overflow-y: auto;
         border: none;
+    }
+    .banner {
+        position: absolute;
+        height: 44px;
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        background-color: rgba(255, 255, 255, 0.85);
+    }
+    button.read {
+        background-color: @color-orange;
+        border: none;
+        border-radius: 2px;
+        position: absolute;
+        padding: 3px 6px;
+        right: 15px;
+        cursor: pointer;
+        color: white;
+        font-size: 1.3rem;
+        top: 50%;
+        .transformTranslateY(-50%);
     }
     .post {
         padding: 15px;
@@ -43,12 +52,11 @@
             margin: 10px 0 20px;
         }
         .body {
-            font-size: 1.6rem;
-
+            font-size: 1.8rem;
             p,
             span,
             div {
-                font-size: 1.6rem;
+                font-size: 1.8rem;
                 line-height: 1.8;
                 margin-bottom: 10px;
                 color: #525252;

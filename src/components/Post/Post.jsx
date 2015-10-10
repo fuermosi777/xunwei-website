@@ -41,7 +41,6 @@ export default React.createClass({
                         <span className="qzone"><a href={'http://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://xun-wei.com/post/' + this.props.data.id} title="分享到QQ空间" target="_blank" target="_blank"><img className="social-icon" src={require('./qzone.png')}/></a></span>
                     </div>
                     {this.props.data.source ? <a className="source" href={this.props.data.source} target="_blank">阅读原文</a> : ''}
-                    {this.props.data.source ? <p className="copy">本文为机器自动抓取于网络，根据<a href="http://creativecommons.org/">CC2.5</a>分发，若您认为本文侵犯了您的版权，请联系我们</p> : ''}
                 </div>
                 <span className="close" onClick={this.handleCloseClick}><i className="ion-android-close"></i></span>
             </div>

@@ -11,14 +11,10 @@ export default React.createClass({
 
     render() {
         return (
-            <div className="Frame">
+            <div className={"Frame" + (!this.state.showSource ? " scroll" : '')}>
                 {this.state.showSource && this.props.post.source ? 
                 <div className="frame">
-                    <iframe src={this.props.post.source} frameBorder="0" ref="iframe"/>
-                    {this.props.post.body.length < 10 ? '' :
-                    <div className="banner">
-                        <button className="read" onClick={this.handleReadClick}>阅读模式</button>
-                    </div>}
+                    <iframe src={this.props.post.source} frameBorder="0" ref="iframe" scrolling="no" width="100%"/>
                 </div> 
                 :
                 <div className="post">
@@ -26,6 +22,11 @@ export default React.createClass({
                     <div className="body" dangerouslySetInnerHTML={{__html: this.props.post.body}}/>
                 </div>
                 }
+                {this.state.showSource && this.props.post.source && this.props.post.body.length > 10 ?
+                    <div className="banner">
+                        <button className="read" onClick={this.handleReadClick}>阅读模式</button>
+                    </div>
+                    : ''}
             </div>
         );
     },
