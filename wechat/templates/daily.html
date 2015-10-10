@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+</head>
+<style>
+body {
+    line-height: 1.6;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+p {
+    margin: 0;
+}
+</style>
+
+<body>
+    <div contenteditable="true" onclick="document.execCommand('selectAll',false,null);">
+        <img src="https://s3-ap-southeast-1.amazonaws.com/xun-wei/image/daily_logo.png" style="width: 100%; max-width: 450px; display: block; margin-bottom: 20px;" /> {% for p in post %}
+        <img src="{{ p.business.photo.url }}" />
+        <p style="font-size: 18px; color: #EF5400">{{ p.title }}</p>
+        <p style="font-size: 16px; color: black">{{ p.preview }} ...</p>
+        <p>
+            <img src="{{ p.qrcode }}" style="width: 200px;" />
+        </p>
+        <p>
+            <br/>
+        </p>
+        {% endfor %}
+        <hr>
+        <p style="font-size: 14px; color: #EF5400">如何打开美食链接？</p>
+        <p style="font-size: 14px; ">长按二维码图片，在弹出的窗口中点击“识别图中二维码”即可打开网页。</p>
+        <p>
+            <br/>
+        </p>
+        <p style="font-size: 14px; color: #EF5400">觉得今天的日报很赞？</p>
+        <p style="font-size: 14px; ">点击右上角的分享按钮，发给你旁边发呆的吃货吧。</p>
+        <hr>
+        <p>寻味美国提供最新鲜，最真实，最准确的美食信息。让每一个驻足美国的吃货们都能快速发现自己熟悉和喜爱的味道。点击下方“阅读原文”直达我们的网站。</p>
+    </div>
+    <hr>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="text" name="post_ids" value="[{% for p in post %}{{ p.id }}{% if not forloop.last %}, {% endif%}{% endfor %}]" />
+        <input type="password" name="tk" placeholder="TOKEN" />
+        <input type="submit" value="PUBLISH" />
+    </form>
+</body>
+
+</html>

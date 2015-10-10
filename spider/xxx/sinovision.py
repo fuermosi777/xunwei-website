@@ -3,21 +3,16 @@
 from spider import tools
 
 DOMAIN = 'http://www.sinovision.net'
-URLS = 'http://www.sinovision.net/food.php?mod=foodmore&bid=1177&page=%s'
+URLS = ['http://www.sinovision.net/food.php']
 
 def start():
-    for i in range(1, 3):
-        url = URLS%i
+    for url in URLS:
         title_list = get_title_list(url)
         for t in title_list:
-            try:
-                tools.store_post(get_post(t))
-            except:
-                print 'pass'
-                pass
+            tools.store_post(get_post(t))
 
 def get_title_list(page_url):
-    return tools.get_list_from_page(page_url, selector='.food_list.item_div a', attribute='href')
+    return tools.get_list_from_page(page_url, selector='.module div.item_div a', attribute='href')
 
 def get_post(url):
     soup = tools.get_soup(url)

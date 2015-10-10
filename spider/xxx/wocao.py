@@ -1,21 +1,24 @@
 from spider import tools
 
 DOMAIN = 'http://wacowsf.com'
-URLS = 'http://wacowsf.com/category/restaurants-%%E9%%A4%%90%%E5%%BB%%B3%%E6%%8E%%A8%%E8%%96%%A6/page/%s/?variant=zh-hans'
+URLS = [
+    'http://wacowny.com/category/restaurants-%E9%A4%90%E5%BB%B3%E6%8E%A8%E8%96%A6/?variant=zh-hans',
+    'http://wacowsf.com/category/restaurants-%%E9%%A4%%90%%E5%%BB%%B3%%E6%%8E%%A8%%E8%%96%%A6/?variant=zh-hans',
+    'http://wacowla.com/blog/category/all-restaurants/?variant=zh-hans']
 
 def start():
-    for i in range(9, 18):
-        url = URLS%i
+    for url in URLS:
         title_list = get_title_list(url)
         for t in title_list:
-            #print get_post(t)
-            tools.store_post(get_post(t))
+            try:
+                tools.store_post(get_post(t))
+            except:
+                print 'Storing %s is error'%t
 
 def get_title_list(page_url):
     return tools.get_list_from_page(page_url, selector='h2.post-title a', attribute='href')
 
 def get_post(url):
-    print url
     soup = tools.get_soup(url)
 
     title = soup.select('h1.post-title a')[0].get_text()

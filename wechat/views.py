@@ -9,6 +9,8 @@ from wechat.models import *
 from datetime import datetime
 from django.db.models import Q
 import random
+import json
+from api import tools
 
 @csrf_exempt
 def wechat(request):
@@ -141,3 +143,57 @@ def check_text(user, msg, context, template):
     # fallback
     context['content'] = '很抱歉，我在%s找不到任何关于“%s“的内容。换个地区？或者换个菜色？亦或者直接点击加号发送您的位置给我。我会帮你找到最新鲜、丰富的美食信息！'%(user.hot_area.name.encode('utf-8'), msg)
     return (context, template)
+
+
+from django.views.decorators.cache import cache_page
+from secret import WECHAT_DAILY_TOKEN
+from base64 import b64decode
+from django.core.files.base import ContentFile
+
+@cache_page(1)
+def daily(request):
+    if request.method == 'POST':
+        post_ids = request.POST.get('post_ids', None)
+        tk = request.POST.get('tk', None)
+        if tk != WECHAT_DAILY_TOKEN:
+            return HttpResponse(status=403)
+        if post_ids:
+            post_ids = json.loads(post_ids)
+            for pid in post_ids:
+                daily = Daily(post_id=pid)
+                daily.save()
+            context = {
+                'msg': 'SUCCESS',
+            }
+    else:
+        tag = request.GET.get('tag', None)
+        hot_area = request.GET.get('hot_area', None) # required
+
+        if not hot_area:
+            return HttpResponse(status=404)
+
+        post = Post.objects.filter(is_approved=True, daily__isnull=True)
+
+        if hot_area:
+            post = post.filter(business__hot_area__name=hot_area)
+
+        if tag:
+            post = post.filter(
+                    Q(title__icontains=tag) | 
+                    Q(business__tag__other_name__icontains=tag) |
+                    Q(business__tag__name__icontains=tag)
+                )
+        post = post.order_by('?')[:4]
+
+        for p in post:
+            image = tools.url_to_qrcode('http://xun-wei.com/i/%s'%p.id)
+            image_data = b64decode(image)
+            post_photo = Post_photo()
+            post_photo.photo = ContentFile(image_data, 'temp.jpg')
+            post_photo.save()
+            p.qrcode = post_photo.photo.url
+
+        context = {
+            'post': post,
+        }
+    return render(request, 'daily.html', context)

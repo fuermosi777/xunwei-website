@@ -12,11 +12,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         
         if args:
-            try:
-                ss = importlib.import_module('spider.xxx.%s'%args[0])
-            except:
-                print "No spider"
-                return
+            ss = importlib.import_module('spider.xxx.%s'%args[0])
             ss.start()
         else:
-            pass
+            vendor = ['bigapple', 'chihuo', 'sinovision', 'wocao']
+            for v in vendor:
+                ss = importlib.import_module('spider.xxx.%s'%v)
+                ss.start()

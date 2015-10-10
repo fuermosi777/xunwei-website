@@ -9,6 +9,7 @@ class BusinessAdmin(admin.ModelAdmin):
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'source',)
     list_filter = ('is_approved', 'business__hot_area')
+    search_fields = ['title']
 
 # Register your models here.
 admin.site.register(State)

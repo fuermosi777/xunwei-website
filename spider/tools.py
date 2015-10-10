@@ -37,7 +37,8 @@ def get_items_from_page(url, selector_dict):
 
 def store_post(dict):
     try:
-        post = Post.objects.get(title=dict['title'])
+        post = Post.objects.get(source__iexact=dict['source'])
+        print 'already have'
     except:
         post = Post(title=dict['title'],
             preview=dict['preview'],

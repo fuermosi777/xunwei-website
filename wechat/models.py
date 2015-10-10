@@ -20,3 +20,9 @@ class Feedback(models.Model):
 
     def __unicode__(self):
         return unicode(self.wechat_user)
+
+class Daily(models.Model):
+    post = models.ForeignKey(Post)
+
+    def __unicode__(self):
+        return unicode(self.post.title)
