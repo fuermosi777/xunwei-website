@@ -15,9 +15,10 @@ export default React.createClass({
                 {this.state.showSource && this.props.post.source ? 
                 <div className="frame">
                     <iframe src={this.props.post.source} frameBorder="0" ref="iframe"/>
+                    {this.props.post.body.length < 10 ? '' :
                     <div className="banner">
                         <button className="read" onClick={this.handleReadClick}>阅读模式</button>
-                    </div>
+                    </div>}
                 </div> 
                 :
                 <div className="post">
