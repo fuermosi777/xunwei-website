@@ -74,6 +74,7 @@ class Post(models.Model):
     business = models.ForeignKey(Business)
     user = models.ForeignKey(User, blank=True, null=True)
     is_approved = models.BooleanField(default=False)
+    hide = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.title
