@@ -51,7 +51,7 @@ def post_list(request):
     if tag:
         post = post.filter(business__tag__name=tag)
     if q:
-        post = post.filter(Q(business__tag__name__icontains=q) | Q(business__name__icontains=q) | Q(business__name2__icontains=q))
+        post = post.filter(Q(business__tag__name__icontains=q) | Q(business__name__icontains=q) | Q(business__name2__icontains=q)).distinct()
 
     start = int(start)
     post = post[start:start+50]
