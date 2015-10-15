@@ -3,11 +3,12 @@ from spider import tools
 DOMAIN = 'http://wacowsf.com'
 URLS = [
     'http://wacowny.com/category/restaurants-%E9%A4%90%E5%BB%B3%E6%8E%A8%E8%96%A6/?variant=zh-hans',
-    'http://wacowsf.com/category/restaurants-%%E9%%A4%%90%%E5%%BB%%B3%%E6%%8E%%A8%%E8%%96%%A6/?variant=zh-hans',
+    'http://wacowsf.com/category/restaurants-%E9%A4%90%E5%BB%B3%E6%8E%A8%E8%96%A6/?variant=zh-hans',
     'http://wacowla.com/blog/category/all-restaurants/?variant=zh-hans']
 
 def start():
     for url in URLS:
+        print url
         title_list = get_title_list(url)
         for t in title_list:
             try:
