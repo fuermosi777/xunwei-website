@@ -1,4 +1,6 @@
-This is the repo for [http://xun-wei.com](http://xun-wei.com).
+__This website has stopped running__
+
+This is the repo for [http://xun-wei.com](http://xun-wei.com)
 
 Access info of Database, AWS keys, and other relevant stuff should be kept in `secret.py`, which is ignored in `git`.
 
